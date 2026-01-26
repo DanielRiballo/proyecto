@@ -1,0 +1,31 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Listado de Películas{% endblock %}
+
+{% block body %}
+    <div style="margin: 20px;">
+        <h1>🎬 Mis Películas</h1>
+        <table border="1" cellpadding="10" style="border-collapse: collapse; width: 100%;">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Título</th>
+                <th>Año</th>
+                <th>Descripción</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for pelicula in peliculas %}
+                <tr>
+                    <td>{{ pelicula.id }}</td>
+                    <td><strong>{{ pelicula.titulo }}</strong></td>
+                    <td>{{ pelicula.year }}</td>
+                    <td>{{ pelicula.description }}</td>
+                </tr>
+            {% else %}
+                <tr><td colspan="4">No hay películas.</td></tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

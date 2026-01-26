@@ -1,0 +1,50 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Pelicula{% endblock %}
+
+{% block body %}
+    <h1>Pelicula</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ pelicula.id }}</td>
+            </tr>
+            <tr>
+                <th>ApiId</th>
+                <td>{{ pelicula.apiId }}</td>
+            </tr>
+            <tr>
+                <th>Titulo</th>
+                <td>{{ pelicula.titulo }}</td>
+            </tr>
+            <tr>
+                <th>Description</th>
+                <td>{{ pelicula.description }}</td>
+            </tr>
+            <tr>
+                <th>Year</th>
+                <td>{{ pelicula.year }}</td>
+            </tr>
+            <tr>
+                <th>Image_url</th>
+                <td>{{ pelicula.imageUrl }}</td>
+            </tr>
+            <tr>
+                <th>Genre</th>
+                <td>{{ pelicula.genre }}</td>
+            </tr>
+            <tr>
+                <th>Stars</th>
+                <td>{{ pelicula.stars }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_admin_pelicula_index') }}">back to list</a>
+
+    <a href="{{ path('app_admin_pelicula_edit', {'id': pelicula.id}) }}">edit</a>
+
+    {{ include('admin_pelicula/_delete_form.html.twig') }}
+{% endblock %}

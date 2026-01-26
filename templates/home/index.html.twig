@@ -1,0 +1,121 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Inicio{% endblock %}
+
+{% block body %}
+    <style>
+        /* Estilos para que se parezca a la foto del profesor */
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #fca542; /* Color naranja de fondo similar */
+            /* Si tienes la imagen, descomenta la linea de abajo y pon la ruta */
+            /* background-image: url('/nombre-de-tu-foto.jpg'); */
+            background-size: cover;
+            font-family: sans-serif;
+        }
+        .top-bar {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+        }
+        .btn-login {
+            background-color: #2563eb;
+            color: white;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 20px;
+            font-weight: bold;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        .main-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            flex-direction: column;
+        }
+        .grid-menu {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            max-width: 800px;
+            width: 100%;
+            padding: 20px;
+        }
+        .card-btn {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 40px;
+            border-radius: 15px;
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 1.2rem;
+            transition: transform 0.2s;
+            box-shadow: 0 10px 15px rgba(0,0,0,0.2);
+            text-transform: uppercase;
+        }
+        .card-btn:hover {
+            transform: scale(1.05);
+        }
+        .card-blue { background-color: #3b82f6; }   /* Rankings */
+        .card-red { background-color: #ef4444; }    /* Reviews */
+        .card-orange { background-color: #f97316; } /* Admin */
+        .card-purple { background-color: #8b5cf6; } /* Stats */
+
+        .icon { font-size: 2rem; margin-bottom: 10px; }
+
+        .logo-central {
+            background-color: white;
+            padding: 10px 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            font-weight: bold;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+    </style>
+
+    <div class="top-bar">
+        {% if app.user %}
+            <span style="margin-right: 10px; font-weight: bold;">{{ app.user.email }}</span>
+            <a href="{{ path('app_logout') }}" class="btn-login" style="background-color: #dc3545;">CERRAR SESIÓN</a>
+        {% else %}
+            <a href="{{ path('app_login') }}" class="btn-login">INICIAR SESIÓN</a>
+
+            <a href="{{ path('app_register') }}" class="btn-login" style="background-color: #198754; margin-left: 10px;">REGISTRARSE</a>
+        {% endif %}
+    </div>
+
+    <div class="main-container">
+
+        <div class="logo-central">
+            LAS MEJORES<br>PELICULAS
+        </div>
+
+        <div class="grid-menu">
+            <a href="#" class="card-btn card-blue">
+                <div class="icon">🏆</div>
+                RANKINGS
+            </a>
+
+            <a href="{{ path('app_peliculas') }}" class="card-btn card-red">
+                <div class="icon">⭐⭐</div>
+                REVIEWS
+            </a>
+
+            <a href="{{ path('app_admin_pelicula_index') }}" class="card-btn card-orange">
+                <div class="icon">⚙️</div>
+                ADMIN
+            </a>
+
+            <a href="#" class="card-btn card-purple">
+                <div class="icon">📊</div>
+                STATS
+            </a>
+        </div>
+    </div>
+{% endblock %}

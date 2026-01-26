@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Pelicula index{% endblock %}
+
+{% block body %}
+    <h1>Pelicula index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>ApiId</th>
+                <th>Titulo</th>
+                <th>Description</th>
+                <th>Year</th>
+                <th>Image_url</th>
+                <th>Genre</th>
+                <th>Stars</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for pelicula in peliculas %}
+            <tr>
+                <td>{{ pelicula.id }}</td>
+                <td>{{ pelicula.apiId }}</td>
+                <td>{{ pelicula.titulo }}</td>
+                <td>{{ pelicula.description }}</td>
+                <td>{{ pelicula.year }}</td>
+                <td>{{ pelicula.imageUrl }}</td>
+                <td>{{ pelicula.genre }}</td>
+                <td>{{ pelicula.stars }}</td>
+                <td>
+                    <a href="{{ path('app_admin_pelicula_show', {'id': pelicula.id}) }}">show</a>
+                    <a href="{{ path('app_admin_pelicula_edit', {'id': pelicula.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="9">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_admin_pelicula_new') }}">Create new</a>
+{% endblock %}
