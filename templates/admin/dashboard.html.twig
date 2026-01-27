@@ -1,0 +1,115 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Panel de Administración{% endblock %}
+
+{% block body %}
+    <style>
+        .dashboard-container {
+            max-width: 1000px;
+            margin: 50px auto;
+            padding: 20px;
+            font-family: sans-serif;
+            text-align: center;
+        }
+
+        .dashboard-title {
+            color: #333;
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        .dashboard-subtitle {
+            color: #666;
+            margin-bottom: 50px;
+            font-size: 1.2rem;
+        }
+
+        /* Grid de 3 columnas */
+        .admin-menu-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+        }
+
+        /* Tarjetas de opciones */
+        .admin-option-card {
+            background: white;
+            border-radius: 15px;
+            padding: 40px 20px;
+            text-decoration: none;
+            color: #333;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+            border-top: 5px solid #ccc;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .admin-option-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+        }
+
+        /* Colores específicos para cada sección */
+        .opt-movies { border-top-color: #ef4444; } /* Rojo/Naranja */
+        .opt-rankings { border-top-color: #3b82f6; } /* Azul */
+        .opt-stats { border-top-color: #8b5cf6; } /* Morado */
+
+        .opt-icon {
+            font-size: 4rem;
+            margin-bottom: 20px;
+        }
+
+        .opt-title {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .opt-desc {
+            font-size: 0.9rem;
+            color: #777;
+        }
+
+        .btn-back {
+            display: inline-block;
+            margin-top: 50px;
+            color: #666;
+            text-decoration: none;
+            border: 1px solid #ccc;
+            padding: 10px 20px;
+            border-radius: 30px;
+        }
+        .btn-back:hover { background: #eee; }
+    </style>
+
+    <div class="dashboard-container">
+        <h1 class="dashboard-title">👨‍💻 Panel de Control</h1>
+        <p class="dashboard-subtitle">Bienvenido, Jefe. ¿Qué quieres gestionar hoy?</p>
+
+        <div class="admin-menu-grid">
+
+            <a href="{{ path('app_admin_pelicula_index') }}" class="admin-option-card opt-movies">
+                <div class="opt-icon">🎬</div>
+                <div class="opt-title">Películas</div>
+                <div class="opt-desc">Crear, editar y borrar películas del catálogo.</div>
+            </a>
+
+            <a href="#" class="admin-option-card opt-rankings">
+                <div class="opt-icon">🏆</div>
+                <div class="opt-title">Rankings</div>
+                <div class="opt-desc">Administrar las tablas de clasificación.</div>
+            </a>
+
+            <a href="#" class="admin-option-card opt-stats">
+                <div class="opt-icon">📊</div>
+                <div class="opt-title">Stats</div>
+                <div class="opt-desc">Ver y editar estadísticas globales.</div>
+            </a>
+
+        </div>
+
+        <a href="{{ path('app_home') }}" class="btn-back">🔙 Volver a la Portada</a>
+    </div>
+{% endblock %}

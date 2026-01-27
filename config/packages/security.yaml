@@ -35,12 +35,21 @@ security:
 
     # Note: Only the *first* matching rule is applied
     access_control:
+        # 1. Login y Registro PÚBLICOS (si no, nadie puede entrar)
         - { path: ^/login, roles: PUBLIC_ACCESS }
         - { path: ^/register, roles: PUBLIC_ACCESS }
 
+        # 2. La Portada (solo la raíz "/") PÚBLICA
+        # Esto permite ver los botones de colores sin estar logueado
         - { path: ^/$, roles: PUBLIC_ACCESS }
 
+        # 3. La zona de Admin solo para ROLE_ADMIN
+        - { path: ^/admin, roles: ROLE_ADMIN }
+
+        # 4. TODO LO DEMÁS (Películas, Rankings, Stats, etc.) requiere estar registrado
+        # Cualquier ruta que no sea la portada caerá aquí y pedirá login
         - { path: ^/, roles: ROLE_USER }
+
 when@test:
     security:
         password_hashers:

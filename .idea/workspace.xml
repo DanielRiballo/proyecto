@@ -4,15 +4,22 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="2b87fba6-276f-4553-a501-caa078e0d89f" name="Changes" comment="migracion de la base de datos">
-      <change afterPath="$PROJECT_DIR$/src/Controller/HomeController.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Controller/LoginController.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/home/index.html.twig" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/login/index.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
+    <list default="true" id="2b87fba6-276f-4553-a501-caa078e0d89f" name="Changes" comment="inicio de secion, registro, seguridad, pagina admin">
+      <change afterPath="$PROJECT_DIR$/src/Controller/AdminDashboardController.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/admin/dashboard.html.twig" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/bundles/TwigBundle/Exception/error403.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.env" beforeDir="false" afterPath="$PROJECT_DIR$/.env" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/config/packages/security.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/config/packages/security.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Entity/Usuario.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Usuario.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/admin_pelicula/_form.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/admin_pelicula/_form.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/admin_pelicula/edit.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/admin_pelicula/edit.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/admin_pelicula/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/admin_pelicula/index.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/admin_pelicula/new.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/admin_pelicula/new.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/admin_pelicula/show.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/admin_pelicula/show.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/home/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/home/index.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/login/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/login/index.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/peliculas/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/peliculas/index.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/registration/register.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/registration/register.html.twig" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -236,7 +243,8 @@
       <workItem from="1768845164423" duration="7155000" />
       <workItem from="1768916923266" duration="6335000" />
       <workItem from="1769011500595" duration="718000" />
-      <workItem from="1769449125165" duration="6558000" />
+      <workItem from="1769449125165" duration="6715000" />
+      <workItem from="1769522421646" duration="9440000" />
     </task>
     <task id="LOCAL-00001" summary="migracion de la base de datos">
       <option name="closed" value="true" />
@@ -246,7 +254,15 @@
       <option name="project" value="LOCAL" />
       <updated>1768919857044</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="inicio de secion, registro, seguridad, pagina admin">
+      <option name="closed" value="true" />
+      <created>1769455824721</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1769455824722</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -254,6 +270,7 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="migracion de la base de datos" />
-    <option name="LAST_COMMIT_MESSAGE" value="migracion de la base de datos" />
+    <MESSAGE value="inicio de secion, registro, seguridad, pagina admin" />
+    <option name="LAST_COMMIT_MESSAGE" value="inicio de secion, registro, seguridad, pagina admin" />
   </component>
 </project>

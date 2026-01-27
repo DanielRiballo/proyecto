@@ -1,0 +1,60 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Acceso Denegado{% endblock %}
+
+{% block body %}
+    <style>
+        .error-container {
+            height: 80vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            background-color: #fca542; /* Mismo naranja que tu portada */
+            font-family: sans-serif;
+            color: white;
+        }
+        .lock-icon {
+            font-size: 5rem;
+            margin-bottom: 20px;
+        }
+        .error-title {
+            font-size: 3rem;
+            font-weight: bold;
+            margin: 0;
+            text-transform: uppercase;
+        }
+        .error-msg {
+            font-size: 1.5rem;
+            margin-top: 10px;
+            max-width: 600px;
+        }
+        .btn-back {
+            margin-top: 30px;
+            background-color: white;
+            color: #fca542;
+            padding: 15px 30px;
+            text-decoration: none;
+            border-radius: 30px;
+            font-weight: bold;
+            font-size: 1.2rem;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            transition: transform 0.2s;
+        }
+        .btn-back:hover {
+            transform: scale(1.05);
+        }
+    </style>
+
+    <div class="error-container">
+        <div class="lock-icon"></div>
+        <h1 class="error-title">Acceso Restringido</h1>
+        <p class="error-msg">
+            Lo sentimos, esta zona es exclusiva para el <strong>Administrador</strong>.<br>
+            Tus credenciales de usuario no tienen permisos para editar películas.
+        </p>
+
+        <a href="{{ path('app_home') }}" class="btn-back">🔙 Volver al Inicio</a>
+    </div>
+{% endblock %}

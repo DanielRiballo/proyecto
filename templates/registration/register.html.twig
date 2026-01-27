@@ -1,19 +1,181 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Register{% endblock %}
+{% block title %}Crear Cuenta{% endblock %}
 
 {% block body %}
-    <h1>Register</h1>
+    <style>
+        /* 1. Fondo de Cine (Igual que la portada) */
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #333;
+            /* Usamos la misma imagen de fondo oscurecida */
+            background-image:
+                linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)),
+                url('{{ asset("images/fondo.jpg") }}'); /* Si no tienes la foto descargada, usa la url de internet de antes */
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            height: 100vh;
+            display: flex; /* Centrado perfecto */
+            justify-content: center;
+            align-items: center;
+        }
 
-    {{ form_errors(registrationForm) }}
+        /* 2. La Tarjeta Blanca Central */
+        .register-card {
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.5);
+            width: 100%;
+            max-width: 450px; /* Ancho máximo elegante */
+            text-align: center;
+        }
 
-    {{ form_start(registrationForm) }}
-        {{ form_row(registrationForm.email) }}
-        {{ form_row(registrationForm.plainPassword, {
-            label: 'Password'
-        }) }}
-        {{ form_row(registrationForm.agreeTerms) }}
+        .register-title {
+            color: #333;
+            font-size: 2rem;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
 
-        <button type="submit" class="btn">Register</button>
-    {{ form_end(registrationForm) }}
+        .register-subtitle {
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 0.9rem;
+        }
+
+        /* 3. Estilos de los inputs (Campos de texto) */
+        /* Symfony genera divs alrededor de los inputs, los estilizamos aquí */
+        .form-group {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        /* Etiquetas (Email, Password) */
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #444;
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+
+        /* Las cajitas de texto */
+        .form-control {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #eee;
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+            box-sizing: border-box; /* Para que el padding no rompa el ancho */
+        }
+
+        .form-control:focus {
+            border-color: #fca542; /* Naranja al escribir */
+            outline: none;
+        }
+
+        /* 4. Checkbox de Términos (siempre da guerra, así se arregla) */
+        .terms-wrapper {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 20px 0;
+            gap: 10px;
+            font-size: 0.9rem;
+            color: #555;
+        }
+        .terms-wrapper input {
+            width: 20px;
+            height: 20px;
+            accent-color: #fca542; /* Checkbox naranja */
+            cursor: pointer;
+        }
+
+        /* 5. Botón de Registro */
+        .btn-register {
+            background-color: #fca542;
+            color: white;
+            border: none;
+            padding: 15px;
+            width: 100%;
+            border-radius: 30px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.2s, background-color 0.2s;
+            margin-top: 10px;
+        }
+
+        .btn-register:hover {
+            background-color: #e6902d;
+            transform: scale(1.02);
+        }
+
+        /* 6. Enlace a Login */
+        .login-link {
+            display: block;
+            margin-top: 20px;
+            color: #666;
+            text-decoration: none;
+            font-size: 0.9rem;
+        }
+        .login-link:hover {
+            color: #fca542;
+            text-decoration: underline;
+        }
+
+        /* Ocultar errores feos de lista y ponerlos bonitos (opcional) */
+        .form-error {
+            color: #dc3545;
+            font-size: 0.85rem;
+            margin-top: 5px;
+        }
+        ul { list-style: none; padding: 0; margin: 0; }
+    </style>
+
+    <div class="register-card">
+        <div class="register-title">🍿 Únete al Club</div>
+        <p class="register-subtitle">Crea tu cuenta para acceder a todo el catálogo</p>
+
+        {% if form_errors(registrationForm) %}
+            <div style="background:#fee; color:red; padding:10px; border-radius:5px; margin-bottom:15px;">
+                {{ form_errors(registrationForm) }}
+            </div>
+        {% endif %}
+
+        {{ form_start(registrationForm) }}
+
+        <div class="form-group">
+            <label>Correo Electrónico</label>
+            {{ form_widget(registrationForm.email, {'attr': {'class': 'form-control', 'placeholder': 'ejemplo@cine.com'}}) }}
+            <div class="form-error">{{ form_errors(registrationForm.email) }}</div>
+        </div>
+
+        <div class="form-group">
+            <label>Contraseña</label>
+            {{ form_widget(registrationForm.plainPassword, {'attr': {'class': 'form-control', 'placeholder': '******'}}) }}
+            <div class="form-error">{{ form_errors(registrationForm.plainPassword) }}</div>
+        </div>
+
+        <div class="terms-wrapper">
+            {{ form_widget(registrationForm.agreeTerms) }}
+            <label for="{{ registrationForm.agreeTerms.vars.id }}">
+                Acepto los términos y condiciones
+            </label>
+        </div>
+        <div class="form-error">{{ form_errors(registrationForm.agreeTerms) }}</div>
+
+        <button type="submit" class="btn-register">CREAR CUENTA</button>
+
+        {{ form_end(registrationForm) }}
+
+        <a href="{{ path('app_login') }}" class="login-link">
+            ¿Ya tienes cuenta? <b>Inicia sesión aquí</b>
+        </a>
+    </div>
 {% endblock %}

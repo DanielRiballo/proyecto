@@ -3,27 +3,150 @@
 {% block title %}Iniciar Sesión{% endblock %}
 
 {% block body %}
-    <div style="margin: 50px auto; max-width: 400px; padding: 20px; border: 1px solid #ccc; border-radius: 10px; background-color: #f9f9f9;">
+    <style>
+        /* 1. FONDO DE CINE */
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #333;
+            /* Usamos la misma imagen de fondo oscurecida */
+            background-image:
+                linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)),
+                url('{{ asset("images/fondo.jpg") }}'); /* Si usas URL de internet, cámbialo aquí */
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            height: 100vh;
+            display: flex; /* Centrado vertical y horizontal */
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* 2. TARJETA BLANCA */
+        .login-card {
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.5);
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+        }
+
+        .login-icon { font-size: 3rem; margin-bottom: 10px; }
+
+        .login-title {
+            color: #333;
+            font-size: 1.8rem;
+            margin-bottom: 25px;
+            font-weight: bold;
+        }
+
+        /* 3. INPUTS */
+        .form-group {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #444;
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #eee;
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+            box-sizing: border-box;
+        }
+
+        .form-control:focus {
+            border-color: #fca542; /* Naranja al escribir */
+            outline: none;
+        }
+
+        /* 4. BOTÓN */
+        .btn-login {
+            background-color: #fca542;
+            color: white;
+            border: none;
+            padding: 15px;
+            width: 100%;
+            border-radius: 30px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.2s, background-color 0.2s;
+            margin-top: 10px;
+        }
+
+        .btn-login:hover {
+            background-color: #e6902d;
+            transform: scale(1.02);
+        }
+
+        /* 5. ERRORES */
+        .alert-danger {
+            background-color: #fee2e2;
+            color: #dc2626;
+            padding: 10px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            font-size: 0.9rem;
+            border: 1px solid #fecaca;
+        }
+
+        .register-link {
+            display: block;
+            margin-top: 25px;
+            color: #666;
+            text-decoration: none;
+            font-size: 0.9rem;
+        }
+        .register-link:hover {
+            color: #fca542;
+            text-decoration: underline;
+        }
+    </style>
+
+    <div class="login-card">
+        <div class="login-icon">🎬</div>
+        <h1 class="login-title">Acceder</h1>
+
+        {% if error %}
+            <div class="alert-danger">
+                {{ error.messageKey|trans(error.messageData, 'security') }}
+            </div>
+        {% endif %}
+
         <form method="post">
-            {% if error %}
-                <div style="color: red; margin-bottom: 15px;">
-                    {{ error.messageKey|trans(error.messageData, 'security') }}
-                </div>
-            {% endif %}
 
-            <h1 style="text-align: center;">Acceder</h1>
+            <div class="form-group">
+                <label for="username">Correo Electrónico</label>
+                <input type="email" value="{{ last_username }}" name="_username" id="username" class="form-control" autocomplete="email" required autofocus placeholder="usuario@cine.com">
+            </div>
 
-            <label for="username">Email:</label>
-            <input type="email" value="{{ last_username }}" name="_username" id="username" class="form-control" autocomplete="email" required autofocus style="width: 100%; padding: 8px; margin-bottom: 10px;">
-
-            <label for="password">Contraseña:</label>
-            <input type="password" name="_password" id="password" class="form-control" autocomplete="current-password" required style="width: 100%; padding: 8px; margin-bottom: 20px;">
+            <div class="form-group">
+                <label for="password">Contraseña</label>
+                <input type="password" name="_password" id="password" class="form-control" autocomplete="current-password" required placeholder="******">
+            </div>
 
             <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
 
-            <button type="submit" style="width: 100%; padding: 10px; background-color: #007bff; color: white; border: none; border-radius: 5px; cursor: pointer;">
-                Entrar
+            <button type="submit" class="btn-login">
+                ENTRAR
             </button>
         </form>
+
+        <a href="{{ path('app_register') }}" class="register-link">
+            ¿Nuevo aquí? <b>Crea tu cuenta gratis</b>
+        </a>
     </div>
 {% endblock %}

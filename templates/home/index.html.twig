@@ -8,10 +8,14 @@
         body {
             margin: 0;
             padding: 0;
-            background-color: #fca542; /* Color naranja de fondo similar */
-            /* Si tienes la imagen, descomenta la linea de abajo y pon la ruta */
-            /* background-image: url('/nombre-de-tu-foto.jpg'); */
+            background-color: #333;
+            background-image:
+                linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)),
+                url('{{ asset("images/fondo.jpg") }}');
             background-size: cover;
+            background-position: center;
+            background-attachment: fixed; /* Efecto elegante: el fondo no se mueve al hacer scroll */
+
             font-family: sans-serif;
         }
         .top-bar {
@@ -104,10 +108,10 @@
 
             <a href="{{ path('app_peliculas') }}" class="card-btn card-red">
                 <div class="icon">⭐⭐</div>
-                REVIEWS
+                PELICULAS
             </a>
 
-            <a href="{{ path('app_admin_pelicula_index') }}" class="card-btn card-orange">
+            <a href="{{ path('app_admin_dashboard') }}" class="card-btn card-orange">
                 <div class="icon">⚙️</div>
                 ADMIN
             </a>

@@ -1,31 +1,133 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Listado de Películas{% endblock %}
+{% block title %}Catálogo de Películas{% endblock %}
 
 {% block body %}
-    <div style="margin: 20px;">
-        <h1>🎬 Mis Películas</h1>
-        <table border="1" cellpadding="10" style="border-collapse: collapse; width: 100%;">
-            <thead>
-            <tr>
-                <th>ID</th>
-                <th>Título</th>
-                <th>Año</th>
-                <th>Descripción</th>
-            </tr>
-            </thead>
-            <tbody>
+    <style>
+        .catalog-container {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 20px;
+            font-family: sans-serif;
+        }
+        .page-title {
+            text-align: center;
+            color: #fff;
+            font-size: 2.5rem;
+            margin-bottom: 40px;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+
+        /* Grid para las tarjetas */
+        .movie-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 30px;
+        }
+
+        /* Diseño de la tarjeta */
+        .movie-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            display: flex;
+            flex-direction: column;
+        }
+        .movie-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+        }
+
+        /* Imagen */
+        .card-img {
+            height: 350px;
+            width: 100%;
+            object-fit: cover;
+            background-color: #ddd;
+        }
+
+        /* Contenido */
+        .card-content {
+            padding: 20px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        .card-title {
+            font-size: 1.2rem;
+            font-weight: bold;
+            margin: 0 0 10px 0;
+            color: #333;
+        }
+        .card-meta {
+            font-size: 0.9rem;
+            color: #666;
+            margin-bottom: 15px;
+            display: flex;
+            justify-content: space-between;
+        }
+        .card-desc {
+            font-size: 0.95rem;
+            color: #555;
+            line-height: 1.4;
+            display: -webkit-box;
+            -webkit-line-clamp: 3; /* Limita a 3 líneas */
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        /* Fondo naranja general para esta página */
+        body { background-color: #fca542; }
+
+        .btn-back {
+            display: inline-block;
+            margin-top: 40px;
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            border: 2px solid white;
+            padding: 10px 20px;
+            border-radius: 30px;
+        }
+        .btn-back:hover { background: white; color: #fca542; }
+    </style>
+
+    <div class="catalog-container">
+        <h1 class="page-title">🎬 Cartelera</h1>
+
+        <div class="movie-grid">
             {% for pelicula in peliculas %}
-                <tr>
-                    <td>{{ pelicula.id }}</td>
-                    <td><strong>{{ pelicula.titulo }}</strong></td>
-                    <td>{{ pelicula.year }}</td>
-                    <td>{{ pelicula.description }}</td>
-                </tr>
+                <div class="movie-card">
+                    {% if pelicula.imageUrl %}
+                        <img src="{{ pelicula.imageUrl }}" alt="{{ pelicula.titulo }}" class="card-img">
+                    {% else %}
+                        <div class="card-img" style="display:flex;align-items:center;justify-content:center;color:#666;">
+                            Sin Imagen
+                        </div>
+                    {% endif %}
+
+                    <div class="card-content">
+                        <h3 class="card-title">{{ pelicula.titulo }}</h3>
+                        <div class="card-meta">
+                            <span>📅 {{ pelicula.year }}</span>
+                            <span>🎭 {{ pelicula.genre }}</span>
+                        </div>
+                        <p class="card-desc">
+                            {{ pelicula.description }}
+                        </p>
+                    </div>
+                </div>
             {% else %}
-                <tr><td colspan="4">No hay películas.</td></tr>
+                <p style="color: white; text-align: center; font-size: 1.5rem; grid-column: 1/-1;">
+                    No hay películas registradas todavía. 😢
+                </p>
             {% endfor %}
-            </tbody>
-        </table>
+        </div>
+
+        <div style="text-align: center;">
+            <a href="{{ path('app_home') }}" class="btn-back">🔙 Volver al Inicio</a>
+        </div>
     </div>
 {% endblock %}

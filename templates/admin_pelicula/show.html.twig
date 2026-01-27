@@ -1,50 +1,102 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Pelicula{% endblock %}
+{% block title %}Detalles de la Película{% endblock %}
 
 {% block body %}
-    <h1>Pelicula</h1>
+    <style>
+        .movie-detail-container {
+            max-width: 900px;
+            margin: 40px auto;
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            display: flex;
+            gap: 40px;
+            font-family: sans-serif;
+        }
+        .movie-poster {
+            flex: 0 0 300px; /* Ancho fijo para la imagen */
+        }
+        .movie-poster img {
+            width: 100%;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+        }
+        .movie-info {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        .movie-title {
+            margin-top: 0;
+            font-size: 2.5rem;
+            color: #333;
+        }
+        .badge {
+            display: inline-block;
+            background: #eee;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 0.9rem;
+            margin-right: 10px;
+            color: #555;
+            font-weight: bold;
+        }
+        .description {
+            margin-top: 20px;
+            line-height: 1.6;
+            color: #666;
+            font-size: 1.1rem;
+        }
+        .actions {
+            margin-top: auto; /* Empuja los botones al final */
+            padding-top: 30px;
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+        .btn-back { color: #666; text-decoration: none; font-weight: bold; }
+        .btn-edit { background: #ffc107; color: #333; padding: 10px 20px; text-decoration: none; border-radius: 5px; font-weight: bold; }
 
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ pelicula.id }}</td>
-            </tr>
-            <tr>
-                <th>ApiId</th>
-                <td>{{ pelicula.apiId }}</td>
-            </tr>
-            <tr>
-                <th>Titulo</th>
-                <td>{{ pelicula.titulo }}</td>
-            </tr>
-            <tr>
-                <th>Description</th>
-                <td>{{ pelicula.description }}</td>
-            </tr>
-            <tr>
-                <th>Year</th>
-                <td>{{ pelicula.year }}</td>
-            </tr>
-            <tr>
-                <th>Image_url</th>
-                <td>{{ pelicula.imageUrl }}</td>
-            </tr>
-            <tr>
-                <th>Genre</th>
-                <td>{{ pelicula.genre }}</td>
-            </tr>
-            <tr>
-                <th>Stars</th>
-                <td>{{ pelicula.stars }}</td>
-            </tr>
-        </tbody>
-    </table>
+        /* Para móviles */
+        @media (max-width: 700px) {
+            .movie-detail-container { flex-direction: column; }
+            .movie-poster { width: 100%; max-width: 300px; margin: 0 auto; }
+        }
+    </style>
 
-    <a href="{{ path('app_admin_pelicula_index') }}">back to list</a>
+    <div class="movie-detail-container">
 
-    <a href="{{ path('app_admin_pelicula_edit', {'id': pelicula.id}) }}">edit</a>
+        <div class="movie-poster">
+            {% if pelicula.imageUrl %}
+                <img src="{{ pelicula.imageUrl }}" alt="{{ pelicula.titulo }}">
+            {% else %}
+                <div style="height: 400px; background: #eee; display: flex; align-items: center; justify-content: center; border-radius: 10px;">
+                    Sin Imagen
+                </div>
+            {% endif %}
+        </div>
 
-    {{ include('admin_pelicula/_delete_form.html.twig') }}
+        <div class="movie-info">
+            <h1 class="movie-title">{{ pelicula.titulo }}</h1>
+
+            <div>
+                <span class="badge"> {{ pelicula.year }}</span>
+                <span class="badge"> {{ pelicula.genre }}</span>
+                <span class="badge">ID: {{ pelicula.id }}</span>
+            </div>
+
+            <p class="description">
+                {{ pelicula.description }}
+            </p>
+
+            <div class="actions">
+                <a href="{{ path('app_admin_pelicula_index') }}" class="btn-back">← Volver a la lista</a>
+                <a href="{{ path('app_admin_pelicula_edit', {'id': pelicula.id}) }}" class="btn-edit">✏️ Editar</a>
+
+                {{ include('admin_pelicula/_delete_form.html.twig') }}
+            </div>
+        </div>
+    </div>
 {% endblock %}

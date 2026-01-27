@@ -1,11 +1,60 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}New Pelicula{% endblock %}
+{% block title %}Nueva Película{% endblock %}
 
 {% block body %}
-    <h1>Create new Pelicula</h1>
+    <style>
+        .form-card {
+            max-width: 600px;
+            margin: 40px auto;
+            background: white;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            font-family: sans-serif;
+        }
+        h1 { text-align: center; color: #333; margin-bottom: 30px; }
 
-    {{ include('admin_pelicula/_form.html.twig') }}
+        /* Estilos para los inputs que genera Symfony automáticamente */
+        input[type="text"], input[type="number"], textarea, select {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 20px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            box-sizing: border-box; /* Para que el padding no rompa el ancho */
+            font-size: 1rem;
+        }
+        input:focus, textarea:focus {
+            border-color: #f97316; /* Color naranja al escribir */
+            outline: none;
+        }
+        label {
+            font-weight: bold;
+            color: #555;
+            display: block;
+            margin-bottom: 8px;
+        }
+        .btn-save {
+            width: 100%;
+            background-color: #28a745;
+            color: white;
+            padding: 15px;
+            border: none;
+            border-radius: 5px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        .btn-save:hover { background-color: #218838; }
+        .back-link { display: block; text-align: center; margin-top: 20px; color: #666; text-decoration: none; }
+    </style>
 
-    <a href="{{ path('app_admin_pelicula_index') }}">back to list</a>
+    <div class="form-card">
+        <h1> Crear Nueva Película</h1>
+
+        {{ include('admin_pelicula/_form.html.twig') }}
+
+        <a href="{{ path('app_admin_pelicula_index') }}" class="back-link">Cancelar y volver</a>
+    </div>
 {% endblock %}
