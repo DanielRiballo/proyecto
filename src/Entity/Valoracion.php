@@ -80,4 +80,9 @@ class Valoracion
 
         return $this;
     }
+
+    public function getEstrellas(): ?int
+    {
+        return $this->estrellas;
+    }
 }

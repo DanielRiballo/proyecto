@@ -200,4 +200,19 @@ class Pelicula
 
         return $this;
     }
+
+    public function getMediaReal(): float
+    {
+        if ($this->valoraciones->isEmpty()) {
+            return 0.0;
+        }
+
+        $suma = 0;
+        foreach ($this->valoraciones as $valoracion) {
+            // Esto fallaba antes porque faltaba el método en Valoracion.php
+            $suma += $valoracion->getEstrellas() ?? 0;
+        }
+
+        return round($suma / count($this->valoraciones), 1);
+    }
 }

@@ -1,134 +1,129 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Admin Películas{% endblock %}
+{% block title %}Admin - Gestión de Películas{% endblock %}
 
 {% block body %}
     <style>
-        /* Contenedor principal */
         .admin-container {
             max-width: 1400px;
             margin: 30px auto;
             padding: 0 20px;
-            font-family: sans-serif;
         }
 
-        /* Cabecera con título y botón de crear */
         .admin-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 30px;
-            background-color: white;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            margin-bottom: 40px;
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
         }
 
-        /* EL GRID: Aquí está la magia del 4 en 4 */
+        /* GRID 4x4 IDÉNTICO A CARTELERA */
         .admin-grid {
             display: grid;
-            /* Forzamos 4 columnas de igual tamaño */
             grid-template-columns: repeat(4, 1fr);
-            gap: 25px; /* Espacio entre tarjetas */
+            gap: 30px;
         }
 
-        /* Diseño de la Tarjeta de Admin */
         .admin-card {
             background: white;
-            border-radius: 12px;
+            border-radius: 15px;
             overflow: hidden;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-            transition: transform 0.2s;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.08);
+            transition: transform 0.3s ease;
             display: flex;
             flex-direction: column;
-            border: 1px solid #eee;
+            border: none;
         }
 
         .admin-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
-            border-color: #fca542; /* Borde naranja al pasar el ratón */
+            transform: translateY(-10px);
         }
 
-        /* Imagen */
+        .card-img-wrapper {
+            height: 350px;
+            overflow: hidden;
+        }
+
         .card-img-top {
-            height: 200px;
             width: 100%;
+            height: 100%;
             object-fit: cover;
-            background-color: #f0f0f0;
-            border-bottom: 1px solid #eee;
         }
 
-        /* Cuerpo de la tarjeta */
         .card-body {
-            padding: 15px;
-            flex-grow: 1;
+            padding: 20px;
+            text-align: center;
         }
 
         .card-title {
-            font-size: 1.1rem;
-            font-weight: bold;
-            margin: 0 0 5px 0;
-            color: #333;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis; /* Pone ... si el título es muy largo */
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #1a1a1a;
+            margin-bottom: 5px;
         }
 
-        .card-info {
-            font-size: 0.85rem;
-            color: #666;
-            margin-bottom: 10px;
-        }
-
-        /* Botones de acción */
         .card-actions {
-            padding: 15px;
-            background-color: #f9fafb;
-            border-top: 1px solid #eee;
+            padding: 0 20px 20px;
             display: flex;
             gap: 10px;
         }
 
-        .btn-action {
+        .btn-admin {
             flex: 1;
-            text-align: center;
             padding: 8px;
-            border-radius: 6px;
-            text-decoration: none;
-            font-size: 0.9rem;
-            font-weight: bold;
-        }
-
-        .btn-show { background-color: #e5e7eb; color: #374151; }
-        .btn-show:hover { background-color: #d1d5db; }
-
-        .btn-edit { background-color: #fca542; color: white; }
-        .btn-edit:hover { background-color: #e6902d; }
-
-        .btn-create {
-            background-color: #10b981;
-            color: white;
-            padding: 10px 20px;
             border-radius: 8px;
             text-decoration: none;
+            font-weight: 600;
+            text-align: center;
+            font-size: 0.85rem;
+        }
+
+        .btn-view { background: #f3f4f6; color: #374151; }
+        .btn-edit { background: #fca542; color: white; }
+
+        /* BOTÓN VOLVER ESTILO PANEL */
+        .btn-back-pill {
+            display: inline-flex;
+            align-items: center;
+            background: #e5e7eb;
+            color: #4b5563;
+            padding: 10px 25px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: 0.3s;
+            border: 1px solid #d1d5db;
+        }
+
+        .btn-back-pill:hover {
+            background: #d1d5db;
+            color: #1f2937;
+            transform: translateX(-5px);
+        }
+
+        .btn-new {
+            background: #10b981;
+            color: white;
+            padding: 12px 25px;
+            border-radius: 12px;
+            text-decoration: none;
             font-weight: bold;
         }
 
-        /* Para que no se rompa en móviles (opcional) */
-        @media (max-width: 1000px) {
-            .admin-grid { grid-template-columns: repeat(2, 1fr); }
-        }
-        @media (max-width: 600px) {
-            .admin-grid { grid-template-columns: 1fr; }
-        }
+        @media (max-width: 1100px) { .admin-grid { grid-template-columns: repeat(2, 1fr); } }
+        @media (max-width: 650px) { .admin-grid { grid-template-columns: 1fr; } }
     </style>
 
     <div class="admin-container">
-
         <div class="admin-header">
-            <h1 style="margin:0;">⚙️ Gestión de Películas</h1>
-            <a href="{{ path('app_admin_pelicula_new') }}" class="btn-create">
+            <div>
+                <h1 class="fw-bold mb-0">🎬 Gestión de Catálogo</h1>
+            </div>
+            <a href="{{ path('app_admin_pelicula_new') }}" class="btn-new">
                 + Nueva Película
             </a>
         </div>
@@ -136,40 +131,27 @@
         <div class="admin-grid">
             {% for pelicula in peliculas %}
                 <div class="admin-card">
-                    {% if pelicula.imageUrl %}
-                        <img src="{{ pelicula.imageUrl }}" class="card-img-top" alt="Portada">
-                    {% else %}
-                        <div class="card-img-top" style="display:flex;align-items:center;justify-content:center;color:#999;">
-                            📷 Sin Imagen
-                        </div>
-                    {% endif %}
-
+                    <div class="card-img-wrapper">
+                        <img src="{{ pelicula.imageUrl }}" class="card-img-top" alt="{{ pelicula.titulo }}">
+                    </div>
                     <div class="card-body">
-                        <div class="card-title" title="{{ pelicula.titulo }}">{{ pelicula.titulo }}</div>
-                        <div class="card-info">
-                            ID: {{ pelicula.id }} | 📅 {{ pelicula.year }}
-                        </div>
-                        <div style="font-size: 0.8rem; color: #777;">
-                            {{ pelicula.description|slice(0, 50) }}...
-                        </div>
+                        <div class="card-title">{{ pelicula.titulo }}</div>
+                        <small class="text-muted">ID: {{ pelicula.id }}</small>
                     </div>
-
                     <div class="card-actions">
-                        <a href="{{ path('app_admin_pelicula_show', {'id': pelicula.id}) }}" class="btn-action btn-show">Ver</a>
-                        <a href="{{ path('app_admin_pelicula_edit', {'id': pelicula.id}) }}" class="btn-action btn-edit">Editar</a>
+                        <a href="{{ path('app_admin_pelicula_show', {id: pelicula.id}) }}" class="btn-admin btn-view">Ver</a>
+                        <a href="{{ path('app_admin_pelicula_edit', {id: pelicula.id}) }}" class="btn-admin btn-edit">Editar</a>
                     </div>
-                </div>
-            {% else %}
-                <div style="grid-column: 1/-1; text-align: center; padding: 40px;">
-                    <h3>No hay películas creadas</h3>
-                    <p>Dale al botón verde de arriba para crear la primera.</p>
                 </div>
             {% endfor %}
         </div>
+        <br>
+        <br>
 
-        <div style="margin-top: 30px; text-align: center;">
-            <a href="{{ path('app_home') }}" style="color: #666; text-decoration: none;">🔙 Volver al Inicio</a>
+        <div class="text-center mt-5">
+            <a href="{{ path('app_admin_dashboard') }}" class="btn-back-pill">
+                ⬅ Volver al Panel de Control
+            </a>
         </div>
-
     </div>
 {% endblock %}

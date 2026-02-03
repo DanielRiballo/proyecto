@@ -6,7 +6,6 @@
     <style>
         body { background-color: #0f172a; color: #f8fafc; font-family: 'Inter', sans-serif; }
 
-        /* Fondo difuminado elegante detras de la ficha */
         .bg-blur {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: linear-gradient(to bottom, rgba(15, 23, 42, 0.9), #0f172a), url('{{ pelicula.imageUrl }}');
@@ -16,7 +15,6 @@
 
         .main-container { margin-top: 50px; margin-bottom: 50px; }
 
-        /* Ficha de la Película */
         .movie-card {
             background: rgba(30, 41, 59, 0.7);
             backdrop-filter: blur(10px);
@@ -28,7 +26,6 @@
         .poster-img {
             border-radius: 16px;
             box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.5);
-            transition: transform 0.3s;
         }
 
         /* Estrellas Doradas */
@@ -42,25 +39,27 @@
         .rating-group label:hover ~ label,
         .rating-group input:checked ~ label { color: #fbbf24; transform: scale(1.1); }
 
-        /* Inputs Estilizados */
         .form-control-custom {
             background: rgba(15, 23, 42, 0.6);
             border: 1px solid rgba(255, 255, 255, 0.1);
             color: white; border-radius: 12px; padding: 15px;
         }
-        .form-control-custom:focus { background: rgba(15, 23, 42, 0.8); color: white; border-color: #fbbf24; outline: none; }
 
         .btn-gold {
             background: #fbbf24; color: #0f172a; font-weight: 800;
             border: none; border-radius: 12px; padding: 16px;
             text-transform: uppercase; letter-spacing: 1px; transition: 0.3s;
         }
-        .btn-gold:hover { background: #f59e0b; transform: translateY(-2px); box-shadow: 0 10px 15px -3px rgba(251, 191, 36, 0.4); }
+        .btn-gold:hover { background: #f59e0b; transform: translateY(-2px); }
 
-        /* Comentarios */
         .comment-card {
             background: rgba(255, 255, 255, 0.03); border-radius: 16px;
             padding: 20px; border-left: 4px solid #fbbf24; margin-bottom: 15px;
+        }
+
+        .btn-delete-comment {
+            background: none; border: none; color: #ef4444; font-size: 0.8rem;
+            text-decoration: underline; padding: 0; cursor: pointer;
         }
     </style>
 {% endblock %}
@@ -71,23 +70,25 @@
     <div class="container main-container">
         <div class="movie-card shadow-2xl">
             <div class="row g-5">
-                {# Lado Izquierdo: Poster e Info #}
+                {# Lado Izquierdo #}
                 <div class="col-lg-4 text-center text-lg-start">
                     <img src="{{ pelicula.imageUrl }}" class="poster-img img-fluid mb-4" style="max-height: 450px;">
                     <h1 class="display-5 fw-bold mb-2">{{ pelicula.titulo }}</h1>
                     <div class="d-flex flex-wrap justify-content-center justify-content-lg-start gap-2 mb-4">
                         <span class="badge rounded-pill bg-warning text-dark px-3 py-2">PELÍCULA</span>
-                        <span class="badge rounded-pill border border-secondary px-3 py-2 text-secondary">HD 4K</span>
                     </div>
                     <a href="{{ path('app_pelicula_index') }}" class="text-decoration-none text-warning small">
                         ← VOLVER A CARTELERA
                     </a>
                 </div>
 
-                {# Lado Derecho: Formulario y Comentarios #}
+                {# Lado Derecho #}
                 <div class="col-lg-8">
                     <div class="p-2">
-                        <h3 class="h4 fw-bold mb-4">Tu opinión cuenta</h3>
+                        {# Título dinámico #}
+                        <h3 class="h4 fw-bold mb-4">
+                            {{ yaHaComentado ? 'Modificar tu opinión' : 'Tu opinión cuenta' }}
+                        </h3>
 
                         {{ form_start(form) }}
                         <div class="mb-4">
@@ -110,7 +111,7 @@
                         </div>
 
                         <button type="submit" class="btn btn-gold w-100 mb-5">
-                            Publicar Valoración
+                            {{ yaHaComentado ? 'Actualizar Valoración' : 'Publicar Valoración' }}
                         </button>
                         {{ form_end(form) }}
 
@@ -119,12 +120,25 @@
                             {% for v in pelicula.valoraciones %}
                                 <div class="comment-card">
                                     <div class="d-flex justify-content-between align-items-center mb-2">
-                                        <span class="text-warning fw-bold small">@{{ v.usuario.userIdentifier|default('User') }}</span>
+                                        <span class="text-warning fw-bold small">
+                                            @{{ v.usuario.userIdentifier|default('User') }}
+                                            {% if app.user and v.usuario == app.user %}
+                                                <span class="badge bg-secondary ms-2" style="font-size: 0.6rem;">TÚ</span>
+                                            {% endif %}
+                                        </span>
                                         <div class="text-warning small">
                                             {% for i in 1..v.puntuacion %}★{% endfor %}
                                         </div>
                                     </div>
-                                    <p class="mb-0 text-slate-300">"{{ v.comentario }}"</p>
+                                    <p class="mb-2 text-slate-300">"{{ v.comentario }}"</p>
+
+                                    {# BOTÓN DE BORRAR SOLO PARA EL DUEÑO #}
+                                    {% if app.user and v.usuario == app.user %}
+                                        <form method="post" action="{{ path('app_valoracion_delete', {id: v.id}) }}" onsubmit="return confirm('¿Eliminar tu crítica definitivamente?');">
+                                            <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ v.id) }}">
+                                            <button type="submit" class="btn-delete-comment">Eliminar comentario</button>
+                                        </form>
+                                    {% endif %}
                                 </div>
                             {% else %}
                                 <div class="text-center py-4 border border-dashed border-secondary rounded-3">

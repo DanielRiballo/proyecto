@@ -18,7 +18,35 @@ final class AdminPeliculaController extends AbstractController
     public function index(PeliculaRepository $peliculaRepository): Response
     {
         return $this->render('admin_pelicula/index.html.twig', [
-            'pelicula' => $peliculaRepository->findAll(),
+            'peliculas' => $peliculaRepository->findAll(),
+        ]);
+    }
+
+    // ESTA ES LA RUTA QUE TIENE QUE FUNCIONAR
+    #[Route('/visualizar-ranking', name: 'app_admin_ranking_pelis', methods: ['GET'])]
+    public function ranking(PeliculaRepository $peliculaRepository): Response
+    {
+        $peliculas = $peliculaRepository->findAll();
+
+        foreach ($peliculas as $pelicula) {
+            $valoraciones = $pelicula->getValoraciones();
+            $totalVotos = count($valoraciones);
+
+            if ($totalVotos > 0) {
+                $suma = 0;
+                foreach ($valoraciones as $voto) {
+                    $suma += $voto->getPuntuacion();
+                }
+                $pelicula->notaMedia = $suma / $totalVotos;
+            } else {
+                $pelicula->notaMedia = 0;
+            }
+        }
+
+        usort($peliculas, fn($a, $b) => $b->notaMedia <=> $a->notaMedia);
+
+        return $this->render('admin_pelicula/ranking.html.twig', [
+            'peliculas' => $peliculas,
         ]);
     }
 
@@ -28,26 +56,18 @@ final class AdminPeliculaController extends AbstractController
         $pelicula = new Pelicula();
         $form = $this->createForm(PeliculaType::class, $pelicula);
         $form->handleRequest($request);
-
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->persist($pelicula);
             $entityManager->flush();
-
             return $this->redirectToRoute('app_admin_pelicula_index', [], Response::HTTP_SEE_OTHER);
         }
-
-        return $this->render('admin_pelicula/new.html.twig', [
-            'pelicula' => $pelicula,
-            'form' => $form,
-        ]);
+        return $this->render('admin_pelicula/new.html.twig', ['pelicula' => $pelicula, 'form' => $form]);
     }
 
     #[Route('/{id}', name: 'app_admin_pelicula_show', methods: ['GET'])]
     public function show(Pelicula $pelicula): Response
     {
-        return $this->render('admin_pelicula/show.html.twig', [
-            'pelicula' => $pelicula,
-        ]);
+        return $this->render('admin_pelicula/show.html.twig', ['pelicula' => $pelicula]);
     }
 
     #[Route('/{id}/edit', name: 'app_admin_pelicula_edit', methods: ['GET', 'POST'])]
@@ -55,17 +75,11 @@ final class AdminPeliculaController extends AbstractController
     {
         $form = $this->createForm(PeliculaType::class, $pelicula);
         $form->handleRequest($request);
-
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->flush();
-
             return $this->redirectToRoute('app_admin_pelicula_index', [], Response::HTTP_SEE_OTHER);
         }
-
-        return $this->render('admin_pelicula/edit.html.twig', [
-            'pelicula' => $pelicula,
-            'form' => $form,
-        ]);
+        return $this->render('admin_pelicula/edit.html.twig', ['pelicula' => $pelicula, 'form' => $form]);
     }
 
     #[Route('/{id}', name: 'app_admin_pelicula_delete', methods: ['POST'])]
@@ -75,7 +89,6 @@ final class AdminPeliculaController extends AbstractController
             $entityManager->remove($pelicula);
             $entityManager->flush();
         }
-
         return $this->redirectToRoute('app_admin_pelicula_index', [], Response::HTTP_SEE_OTHER);
     }
 }
