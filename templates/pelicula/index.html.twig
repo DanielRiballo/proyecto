@@ -34,9 +34,13 @@
             transition: transform 0.3s ease, box-shadow 0.3s ease;
             display: flex;
             flex-direction: column;
+            text-decoration: none; /* Quitamos subrayado porque haremos toda la tarjeta un enlace */
+            color: inherit;
+            position: relative;
         }
+
         .movie-card:hover {
-            transform: translateY(-10px);
+            transform: translateY(-5px);
             box-shadow: 0 15px 30px rgba(0,0,0,0.2);
         }
 
@@ -76,6 +80,33 @@
             -webkit-line-clamp: 3; /* Limita a 3 líneas */
             -webkit-box-orient: vertical;
             overflow: hidden;
+            margin-bottom: 15px;
+        }
+
+        /* Estilos nuevos para la valoración */
+        .rating-badge {
+            background-color: #f1c40f;
+            color: #333;
+            font-weight: bold;
+            padding: 5px 10px;
+            border-radius: 20px;
+            display: inline-block;
+            margin-bottom: 10px;
+            font-size: 0.9rem;
+        }
+
+        .btn-vote {
+            margin-top: auto;
+            background-color: #3b82f6;
+            color: white;
+            text-align: center;
+            padding: 10px;
+            border-radius: 8px;
+            font-weight: bold;
+            transition: background 0.3s;
+        }
+        .movie-card:hover .btn-vote {
+            background-color: #2563eb;
         }
 
         /* Fondo naranja general para esta página */
@@ -99,7 +130,18 @@
 
         <div class="movie-grid">
             {% for pelicula in peliculas %}
-                <div class="movie-card">
+
+                {# Calculamos la media de estrellas aquí mismo #}
+                {% set suma = 0 %}
+                {% set cantidad = 0 %}
+                {% for voto in pelicula.valoraciones %}
+                    {% set suma = suma + voto.puntuacion %}
+                    {% set cantidad = cantidad + 1 %}
+                {% endfor %}
+
+                {# Enlace a la página de detalle/votar #}
+                <a href="{{ path('app_pelicula_show', {'id': pelicula.id}) }}" class="movie-card">
+
                     {% if pelicula.imageUrl %}
                         <img src="{{ pelicula.imageUrl }}" alt="{{ pelicula.titulo }}" class="card-img">
                     {% else %}
@@ -109,16 +151,29 @@
                     {% endif %}
 
                     <div class="card-content">
-                        <h3 class="card-title">{{ pelicula.titulo }}</h3>
+                        <div style="display: flex; justify-content: space-between; align-items: start;">
+                            <h3 class="card-title">{{ pelicula.titulo }}</h3>
+
+                            {# Mostramos la estrellita con la nota #}
+                            {% if cantidad > 0 %}
+                                <div class="rating-badge">⭐ {{ (suma / cantidad)|number_format(1) }}</div>
+                            {% endif %}
+                        </div>
+
                         <div class="card-meta">
                             <span>📅 {{ pelicula.year }}</span>
                             <span>🎭 {{ pelicula.genre }}</span>
                         </div>
+
                         <p class="card-desc">
                             {{ pelicula.description }}
                         </p>
+
+                        <div class="btn-vote">
+                            Ver y Votar ✍️
+                        </div>
                     </div>
-                </div>
+                </a>
             {% else %}
                 <p style="color: white; text-align: center; font-size: 1.5rem; grid-column: 1/-1;">
                     No hay películas registradas todavía. 😢

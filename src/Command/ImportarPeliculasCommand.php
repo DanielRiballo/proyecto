@@ -12,7 +12,7 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 
 #[AsCommand(
-    name: 'app:importar-peliculas',
+    name: 'app:importar-pelicula',
     description: 'Descarga películas de la API y las guarda en la base de datos',
 )]
 class ImportarPeliculasCommand extends Command

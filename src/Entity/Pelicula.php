@@ -46,7 +46,7 @@ class Pelicula
     /**
      * @var Collection<int, Ranking>
      */
-    #[ORM\ManyToMany(targetEntity: Ranking::class, mappedBy: 'peliculas')]
+    #[ORM\ManyToMany(targetEntity: Ranking::class, mappedBy: 'pelicula')]
     private Collection $rankings;
 
     public function __construct()

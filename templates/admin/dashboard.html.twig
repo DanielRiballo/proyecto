@@ -96,7 +96,7 @@
                 <div class="opt-desc">Crear, editar y borrar películas del catálogo.</div>
             </a>
 
-            <a href="#" class="admin-option-card opt-rankings">
+            <a href="{{ path('app_ranking_index') }}" class="admin-option-card opt-rankings">
                 <div class="opt-icon">🏆</div>
                 <div class="opt-title">Rankings</div>
                 <div class="opt-desc">Administrar las tablas de clasificación.</div>
@@ -111,5 +111,6 @@
         </div>
 
         <a href="{{ path('app_home') }}" class="btn-back">🔙 Volver a la Portada</a>
+
     </div>
 {% endblock %}

@@ -18,7 +18,7 @@ final class AdminPeliculaController extends AbstractController
     public function index(PeliculaRepository $peliculaRepository): Response
     {
         return $this->render('admin_pelicula/index.html.twig', [
-            'peliculas' => $peliculaRepository->findAll(),
+            'pelicula' => $peliculaRepository->findAll(),
         ]);
     }
 

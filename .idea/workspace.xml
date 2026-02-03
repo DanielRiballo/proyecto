@@ -4,22 +4,27 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="2b87fba6-276f-4553-a501-caa078e0d89f" name="Changes" comment="inicio de secion, registro, seguridad, pagina admin">
-      <change afterPath="$PROJECT_DIR$/src/Controller/AdminDashboardController.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/admin/dashboard.html.twig" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/bundles/TwigBundle/Exception/error403.html.twig" afterDir="false" />
+    <list default="true" id="2b87fba6-276f-4553-a501-caa078e0d89f" name="Changes" comment="actualizacion de inicio de secion, registro, seguridad, pagina admin">
+      <change afterPath="$PROJECT_DIR$/src/Controller/PeliculaController.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Controller/RankingController.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Form/RankingType.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Form/ValoracionType.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/pelicula/show.html.twig" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/ranking/index.html.twig" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/ranking/new.html.twig" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.env" beforeDir="false" afterPath="$PROJECT_DIR$/.env" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/packages/security.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/config/packages/security.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/admin_pelicula/_form.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/admin_pelicula/_form.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/admin_pelicula/edit.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/admin_pelicula/edit.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/admin_pelicula/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/admin_pelicula/index.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/admin_pelicula/new.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/admin_pelicula/new.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/admin_pelicula/show.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/admin_pelicula/show.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/composer.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/composer.lock" beforeDir="false" afterPath="$PROJECT_DIR$/composer.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/bundles.php" beforeDir="false" afterPath="$PROJECT_DIR$/config/bundles.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Command/ImportarPeliculasCommand.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Command/ImportarPeliculasCommand.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/AdminPeliculaController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/AdminPeliculaController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/PeliculasController.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/Pelicula.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Pelicula.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Form/PeliculaType.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Form/PeliculaType.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/admin/dashboard.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/admin/dashboard.html.twig" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/home/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/home/index.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/login/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/login/index.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/peliculas/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/peliculas/index.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/registration/register.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/registration/register.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/peliculas/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/pelicula/index.html.twig" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -244,7 +249,10 @@
       <workItem from="1768916923266" duration="6335000" />
       <workItem from="1769011500595" duration="718000" />
       <workItem from="1769449125165" duration="6715000" />
-      <workItem from="1769522421646" duration="9440000" />
+      <workItem from="1769522421646" duration="9495000" />
+      <workItem from="1769616047527" duration="3309000" />
+      <workItem from="1770054071787" duration="7114000" />
+      <workItem from="1770126513459" duration="1347000" />
     </task>
     <task id="LOCAL-00001" summary="migracion de la base de datos">
       <option name="closed" value="true" />
@@ -262,7 +270,15 @@
       <option name="project" value="LOCAL" />
       <updated>1769455824722</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="actualizacion de inicio de secion, registro, seguridad, pagina admin">
+      <option name="closed" value="true" />
+      <created>1769532589551</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1769532589551</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -271,6 +287,7 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="migracion de la base de datos" />
     <MESSAGE value="inicio de secion, registro, seguridad, pagina admin" />
-    <option name="LAST_COMMIT_MESSAGE" value="inicio de secion, registro, seguridad, pagina admin" />
+    <MESSAGE value="actualizacion de inicio de secion, registro, seguridad, pagina admin" />
+    <option name="LAST_COMMIT_MESSAGE" value="actualizacion de inicio de secion, registro, seguridad, pagina admin" />
   </component>
 </project>

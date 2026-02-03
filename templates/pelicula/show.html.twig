@@ -1,0 +1,140 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Valorar {{ pelicula.titulo }}{% endblock %}
+
+{% block stylesheets %}
+    <style>
+        body { background-color: #0f172a; color: #f8fafc; font-family: 'Inter', sans-serif; }
+
+        /* Fondo difuminado elegante detras de la ficha */
+        .bg-blur {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(to bottom, rgba(15, 23, 42, 0.9), #0f172a), url('{{ pelicula.imageUrl }}');
+            background-size: cover; background-position: center;
+            z-index: -1; filter: blur(40px); opacity: 0.4;
+        }
+
+        .main-container { margin-top: 50px; margin-bottom: 50px; }
+
+        /* Ficha de la Película */
+        .movie-card {
+            background: rgba(30, 41, 59, 0.7);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 24px;
+            padding: 30px;
+        }
+
+        .poster-img {
+            border-radius: 16px;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.5);
+            transition: transform 0.3s;
+        }
+
+        /* Estrellas Doradas */
+        .rating-group { display: flex; flex-direction: row-reverse; justify-content: flex-end; }
+        .rating-group input { display: none; }
+        .rating-group label {
+            font-size: 2.8rem; color: #334155; cursor: pointer;
+            transition: color 0.2s, transform 0.2s; margin: 0 2px;
+        }
+        .rating-group label:hover,
+        .rating-group label:hover ~ label,
+        .rating-group input:checked ~ label { color: #fbbf24; transform: scale(1.1); }
+
+        /* Inputs Estilizados */
+        .form-control-custom {
+            background: rgba(15, 23, 42, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: white; border-radius: 12px; padding: 15px;
+        }
+        .form-control-custom:focus { background: rgba(15, 23, 42, 0.8); color: white; border-color: #fbbf24; outline: none; }
+
+        .btn-gold {
+            background: #fbbf24; color: #0f172a; font-weight: 800;
+            border: none; border-radius: 12px; padding: 16px;
+            text-transform: uppercase; letter-spacing: 1px; transition: 0.3s;
+        }
+        .btn-gold:hover { background: #f59e0b; transform: translateY(-2px); box-shadow: 0 10px 15px -3px rgba(251, 191, 36, 0.4); }
+
+        /* Comentarios */
+        .comment-card {
+            background: rgba(255, 255, 255, 0.03); border-radius: 16px;
+            padding: 20px; border-left: 4px solid #fbbf24; margin-bottom: 15px;
+        }
+    </style>
+{% endblock %}
+
+{% block body %}
+    <div class="bg-blur"></div>
+
+    <div class="container main-container">
+        <div class="movie-card shadow-2xl">
+            <div class="row g-5">
+                {# Lado Izquierdo: Poster e Info #}
+                <div class="col-lg-4 text-center text-lg-start">
+                    <img src="{{ pelicula.imageUrl }}" class="poster-img img-fluid mb-4" style="max-height: 450px;">
+                    <h1 class="display-5 fw-bold mb-2">{{ pelicula.titulo }}</h1>
+                    <div class="d-flex flex-wrap justify-content-center justify-content-lg-start gap-2 mb-4">
+                        <span class="badge rounded-pill bg-warning text-dark px-3 py-2">PELÍCULA</span>
+                        <span class="badge rounded-pill border border-secondary px-3 py-2 text-secondary">HD 4K</span>
+                    </div>
+                    <a href="{{ path('app_pelicula_index') }}" class="text-decoration-none text-warning small">
+                        ← VOLVER A CARTELERA
+                    </a>
+                </div>
+
+                {# Lado Derecho: Formulario y Comentarios #}
+                <div class="col-lg-8">
+                    <div class="p-2">
+                        <h3 class="h4 fw-bold mb-4">Tu opinión cuenta</h3>
+
+                        {{ form_start(form) }}
+                        <div class="mb-4">
+                            <label class="form-label text-secondary small fw-bold">PUNTUACIÓN</label>
+                            <div class="rating-group">
+                                {% for child in form.puntuacion %}
+                                    {{ form_widget(child) }}
+                                    <label for="{{ child.vars.id }}">★</label>
+                                {% endfor %}
+                            </div>
+                        </div>
+
+                        <div class="mb-4">
+                            <label class="form-label text-secondary small fw-bold">¿QUÉ TE HA PARECIDO?</label>
+                            {{ form_widget(form.comentario, {'attr': {
+                                'class': 'form-control-custom w-100',
+                                'rows': '3',
+                                'placeholder': 'Escribe aquí tu crítica cinéfila...'
+                            }}) }}
+                        </div>
+
+                        <button type="submit" class="btn btn-gold w-100 mb-5">
+                            Publicar Valoración
+                        </button>
+                        {{ form_end(form) }}
+
+                        <div class="comments-section mt-5">
+                            <h4 class="h5 fw-bold mb-4">Críticas de otros usuarios</h4>
+                            {% for v in pelicula.valoraciones %}
+                                <div class="comment-card">
+                                    <div class="d-flex justify-content-between align-items-center mb-2">
+                                        <span class="text-warning fw-bold small">@{{ v.usuario.userIdentifier|default('User') }}</span>
+                                        <div class="text-warning small">
+                                            {% for i in 1..v.puntuacion %}★{% endfor %}
+                                        </div>
+                                    </div>
+                                    <p class="mb-0 text-slate-300">"{{ v.comentario }}"</p>
+                                </div>
+                            {% else %}
+                                <div class="text-center py-4 border border-dashed border-secondary rounded-3">
+                                    <p class="text-secondary mb-0">Esta película aún no tiene críticas. ¡Sé el primero!</p>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
