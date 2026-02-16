@@ -1,116 +1,177 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Panel de Administración{% endblock %}
+{% block title %}Panel de Control - Admin{% endblock %}
 
 {% block body %}
-    <style>
-        .dashboard-container {
-            max-width: 1000px;
-            margin: 50px auto;
-            padding: 20px;
-            font-family: sans-serif;
-            text-align: center;
-        }
+<style>
+    body {
+        background-color: #87CEEB;
+        font-family: 'Poppins', 'Segoe UI', sans-serif;
+        margin: 0;
+        padding: 40px 0;
+        min-height: 100vh;
+    }
+    .admin-container {
+        max-width: 1200px;
+        margin: auto;
+        padding: 20px;
+    }
 
-        .dashboard-title {
-            color: #333;
-            font-size: 2.5rem;
-            margin-bottom: 10px;
-        }
+    .dashboard-header {
+        text-align: center;
+        margin-bottom: 50px;
+        color: #1e293b;
+    }
 
-        .dashboard-subtitle {
-            color: #666;
-            margin-bottom: 50px;
-            font-size: 1.2rem;
-        }
+    .grid-admin {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 25px;
+        margin-top: 20px;
+    }
 
-        /* Grid de 3 columnas */
-        .admin-menu-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 30px;
-        }
+    .admin-card {
+        background: white;
+        padding: 30px;
+        border-radius: 30px;
+        text-decoration: none;
+        color: #333;
+        box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+        transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        position: relative;
+    }
 
-        /* Tarjetas de opciones */
-        .admin-option-card {
-            background: white;
-            border-radius: 15px;
-            padding: 40px 20px;
-            text-decoration: none;
-            color: #333;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-            transition: transform 0.3s, box-shadow 0.3s;
-            border-top: 5px solid #ccc;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
+    .admin-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+    }
 
-        .admin-option-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
-        }
+    .icon-bg {
+        width: 70px;
+        height: 70px;
+        border-radius: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 2.2rem;
+        margin-bottom: 15px;
+    }
 
-        /* Colores específicos para cada sección */
-        .opt-movies { border-top-color: #ef4444; } /* Rojo/Naranja */
-        .opt-rankings { border-top-color: #3b82f6; } /* Azul */
-        .opt-stats { border-top-color: #8b5cf6; } /* Morado */
+    /* Colores por sección mejorados */
+    .bg-pelis { background: #fee2e2; color: #ef4444; }
+    .bg-rank { background: #dbeafe; color: #3b82f6; }
+    .bg-stats { background: #f3e8ff; color: #a855f7; }
+    .bg-api { background: #ecfdf5; color: #10b981; }
+    .bg-cat { background: #fff7ed; color: #f97316; }
 
-        .opt-icon {
-            font-size: 4rem;
-            margin-bottom: 20px;
-        }
+    .card-title { font-size: 1.3rem; font-weight: 800; margin: 10px 0; text-transform: uppercase; }
+    .card-desc { color: #64748b; font-size: 0.85rem; text-align: center; margin-bottom: 20px; min-height: 40px; }
 
-        .opt-title {
-            font-size: 1.5rem;
-            font-weight: bold;
-            margin-bottom: 10px;
-        }
+    .btn-action {
+        padding: 10px 25px;
+        border-radius: 50px;
+        background: #1e293b;
+        color: white;
+        font-size: 0.75rem;
+        font-weight: bold;
+        text-transform: uppercase;
+        transition: 0.3s;
+    }
+    .admin-card:hover .btn-action { background: #000; }
 
-        .opt-desc {
-            font-size: 0.9rem;
-            color: #777;
-        }
+    .stat-number {
+        font-size: 2.2rem;
+        font-weight: 900;
+        color: #1e293b;
+        margin-bottom: 5px;
+    }
 
-        .btn-back {
-            display: inline-block;
-            margin-top: 50px;
-            color: #666;
-            text-decoration: none;
-            border: 1px solid #ccc;
-            padding: 10px 20px;
-            border-radius: 30px;
-        }
-        .btn-back:hover { background: #eee; }
-    </style>
+    .badge-requirement {
+        position: absolute;
+        top: 15px;
+        right: 15px;
+        background: #f1f5f9;
+        padding: 4px 10px;
+        border-radius: 8px;
+        font-size: 0.65rem;
+        font-weight: bold;
+        color: #94a3b8;
+    }
 
-    <div class="dashboard-container">
-        <h1 class="dashboard-title">👨‍💻 Panel de Control</h1>
-        <p class="dashboard-subtitle">Bienvenido, Jefe. ¿Qué quieres gestionar hoy?</p>
+    .btn-back {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        margin-top: 50px;
+        padding: 15px 35px;
+        background: #1e293b;
+        border-radius: 50px;
+        text-decoration: none;
+        color: white;
+        font-weight: 800;
+        box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        transition: 0.3s;
+    }
+    .btn-back:hover { transform: scale(1.05); background: #000; }
+</style>
 
-        <div class="admin-menu-grid">
+<div class="admin-container">
+    <div class="dashboard-header">
+        <h1 style="font-size: 3.5rem; margin: 0; font-weight: 900; letter-spacing: -1px;">🛠️ ADMIN PANEL</h1>
+        <p style="font-weight: 500; opacity: 0.9; color: #1e293b;">Gestión centralizada del sistema para: <strong>{{ app.user.email }}</strong></p>
+    </div>
 
-            <a href="{{ path('app_admin_pelicula_index') }}" class="admin-option-card opt-movies">
-                <div class="opt-icon">🎬</div>
-                <div class="opt-title">Películas</div>
-                <div class="opt-desc">Crear, editar y borrar películas del catálogo.</div>
-            </a>
+    <div class="grid-admin">
+        {# 1. GESTIÓN DE PELÍCULAS (RF4) #}
+        <a href="{{ path('app_admin_pelicula_index') }}" class="admin-card">
+            <span class="badge-requirement">RF4</span>
+            <div class="icon-bg bg-pelis">🎬</div>
+            <div class="stat-number">{{ total_peliculas|default(0) }}</div>
+            <h2 class="card-title">Películas</h2>
+            <p class="card-desc">Control total: Altas, bajas y modificaciones del catálogo.</p>
+            <span class="btn-action">Gestionar Catálogo</span>
+        </a>
 
-            <a href="{{ path('app_admin_ranking_pelis') }}" class="admin-option-card opt-rankings">
-                <div class="opt-icon">🏆</div>
-                <div class="opt-title">Rankings</div>
-                <div class="opt-desc">Administrar las tablas de clasificación.</div>
-            </a>
+        {# 2. GESTIÓN DE CATEGORÍAS (RF3) - ¡NUEVO! #}
+        <a href="{{ path('app_admin_ranking_genero', {'genero': 'all'}) }}" class="admin-card">
+            <span class="badge-requirement">RF3</span>
+            <div class="icon-bg bg-cat">📁</div>
+            <h2 class="card-title">Categorías</h2>
+            <p class="card-desc">Organizar géneros y clasificaciones del sistema.</p>
+            <span class="btn-action">Editar Géneros</span>
+        </a>
 
-            <a href="#" class="admin-option-card opt-stats">
-                <div class="opt-icon">📊</div>
-                <div class="opt-title">Stats</div>
-                <div class="opt-desc">Ver y editar estadísticas globales.</div>
-            </a>
+        {# 3. IMPORTAR DESDE API (RF5) - ¡NUEVO! #}
+        <a href="{{ path('app_admin_api_import') }}" class="admin-card">
+            <span class="badge-requirement">RF5</span>
+            <div class="icon-bg bg-api">🌐</div>
+            <h2 class="card-title">Sincronizar API</h2>
+            <p class="card-desc">Obtener datos de películas desde servicios externos automáticamente.</p>
+            <span class="btn-action" style="background: #10b981;">Importar Datos</span>
+        </a>
 
+        {# 4. ESTADÍSTICAS GLOBALES (RF9) #}
+        <div class="admin-card">
+            <span class="badge-requirement">RF9</span>
+            <div class="icon-bg bg-stats">📊</div>
+            <div class="stat-number">{{ total_valoraciones|default(0) }}</div>
+            <h2 class="card-title">Valoraciones</h2>
+            <p class="card-desc">Número total de interacciones y votos de los usuarios.</p>
+            <span class="btn-action">Ver Auditoría</span>
+        </div>
+    </div>
+
+    <div style="text-align: center; margin-top: 40px; display: flex; flex-direction: column; align-items: center; gap: 10px;">
+        <div style="background: rgba(255,255,255,0.5); padding: 10px 20px; border-radius: 15px; font-size: 0.9rem; color: #1e293b;">
+            👤 Usuarios registrados en el sistema: <strong>{{ total_usuarios|default(0) }}</strong>
         </div>
 
-        <a href="{{ path('app_home') }}" class="btn-back">🔙 Volver a la Portada</a>
-
+        <a href="{{ path('app_home') }}" class="btn-back">
+            <span>🏠</span> VOLVER A LA PORTADA
+        </a>
     </div>
+</div>
 {% endblock %}

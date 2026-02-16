@@ -5,20 +5,26 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="2b87fba6-276f-4553-a501-caa078e0d89f" name="Changes" comment="pagina de valoraciones de peliculas, pagina de admin">
-      <change afterPath="$PROJECT_DIR$/templates/admin/index.html.twig" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/admin_pelicula/ranking.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.env" beforeDir="false" afterPath="$PROJECT_DIR$/.env" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/c2d5ff61-d009-42aa-a91f-87511858ec42.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/c2d5ff61-d009-42aa-a91f-87511858ec42.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/c2d5ff61-d009-42aa-a91f-87511858ec42/storage_v2/_src_/database/proyectovaloracion.J4Hp6Q/schema/public.abK9xQ.meta" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/c2d5ff61-d009-42aa-a91f-87511858ec42/storage_v2/_src_/database/proyectovaloracion.J4Hp6Q/schema/public.abK9xQ.meta" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/packages/security.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/config/packages/security.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/reference.php" beforeDir="false" afterPath="$PROJECT_DIR$/config/reference.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Controller/AdminPeliculaController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/AdminPeliculaController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/PeliculaController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/PeliculaController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/RankingController.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/PeliculaController.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/RegistrationController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/RegistrationController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Entity/Pelicula.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Pelicula.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/Ranking.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Ranking.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Entity/Valoracion.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Valoracion.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/admin/dashboard.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/admin/dashboard.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/admin_pelicula/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/admin_pelicula/index.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/admin_pelicula/ranking.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/admin_pelicula/ranking.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/admin_pelicula/show.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/admin_pelicula/show.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/base.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/base.html.twig" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/home/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/home/index.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/pelicula/show.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/pelicula/show.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/ranking/index.html.twig" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/ranking/new.html.twig" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/pelicula/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/pelicula/index.html.twig" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -30,6 +36,11 @@
     <execution>
       <executable path="composer" />
     </execution>
+  </component>
+  <component name="CopilotPersistence">
+    <persistenceIdMap>
+      <entry key="_C:/Users/driba/IdeaProjects/proyecto" value="38AZUGVbSPVWVafcU11dKz2Hydh" />
+    </persistenceIdMap>
   </component>
   <component name="EmbeddingIndexingInfo">
     <option name="cachedIndexableFilesCount" value="1238" />
@@ -54,14 +65,14 @@
   <component name="GithubPullRequestsUISettings">{
   &quot;selectedUrlAndAccountId&quot;: {
     &quot;url&quot;: &quot;https://github.com/DanielRiballo/proyecto.git&quot;,
-    &quot;accountId&quot;: &quot;05b6510e-5245-4b67-96af-0d7d0cfe5fdd&quot;
+    &quot;accountId&quot;: &quot;cf7e8bd6-267d-4983-b5de-41ec67ed6bc5&quot;
   }
 }</component>
   <component name="McpProjectServerCommands">
     <commands />
     <urls />
   </component>
-  <component name="PhpWorkspaceProjectConfiguration" interpreter_name="PHP 8.4">
+  <component name="PhpWorkspaceProjectConfiguration" interpreter_name="C:\php\php.exe">
     <include_path>
       <path value="$PROJECT_DIR$/vendor/webmozart/assert" />
       <path value="$PROJECT_DIR$/vendor/nikic/php-parser" />
@@ -207,6 +218,8 @@
     &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.typescript.service.memoryLimit.init&quot;: &quot;true&quot;,
     &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
@@ -224,11 +237,12 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-js-predefined-d6986cc7102b-9b0f141eb926-JavaScript-PS-253.30387.85" />
-        <option value="bundled-php-predefined-a98d8de5180a-0e0d91225499-com.jetbrains.php.sharedIndexes-PS-253.30387.85" />
+        <option value="bundled-jdk-9823dce3aa75-a94e463ab2e7-intellij.indexing.shared.core-IU-243.25659.39" />
+        <option value="bundled-js-predefined-d6986cc7102b-1632447f56bf-JavaScript-IU-243.25659.39" />
       </set>
     </attachedChunks>
   </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
       <changelist id="2b87fba6-276f-4553-a501-caa078e0d89f" name="Changes" comment="" />
@@ -247,6 +261,12 @@
       <workItem from="1769616047527" duration="3309000" />
       <workItem from="1770054071787" duration="7114000" />
       <workItem from="1770126513459" duration="10778000" />
+      <workItem from="1770673063903" duration="63000" />
+      <workItem from="1770718002172" duration="1980000" />
+      <workItem from="1770731841955" duration="8796000" />
+      <workItem from="1770798505238" duration="4462000" />
+      <workItem from="1770825326976" duration="3116000" />
+      <workItem from="1771171505738" duration="13592000" />
     </task>
     <task id="LOCAL-00001" summary="migracion de la base de datos">
       <option name="closed" value="true" />
@@ -292,5 +312,13 @@
     <MESSAGE value="actualizacion de inicio de secion, registro, seguridad, pagina admin" />
     <MESSAGE value="pagina de valoraciones de peliculas, pagina de admin" />
     <option name="LAST_COMMIT_MESSAGE" value="pagina de valoraciones de peliculas, pagina de admin" />
+  </component>
+  <component name="github-copilot-workspace">
+    <instructionFileLocations>
+      <option value=".github/instructions" />
+    </instructionFileLocations>
+    <promptFileLocations>
+      <option value=".github/prompts" />
+    </promptFileLocations>
   </component>
 </project>

@@ -25,6 +25,7 @@ class Ranking
     /**
      * @var Collection<int, Pelicula>
      */
+    // El inversedBy apunta a la propiedad $rankings de la clase Pelicula
     #[ORM\ManyToMany(targetEntity: Pelicula::class, inversedBy: 'rankings')]
     private Collection $peliculas;
 
@@ -46,7 +47,6 @@ class Ranking
     public function setNombre(string $nombre): static
     {
         $this->nombre = $nombre;
-
         return $this;
     }
 
@@ -58,7 +58,6 @@ class Ranking
     public function setUsuario(?Usuario $usuario): static
     {
         $this->usuario = $usuario;
-
         return $this;
     }
 
@@ -75,14 +74,12 @@ class Ranking
         if (!$this->peliculas->contains($pelicula)) {
             $this->peliculas->add($pelicula);
         }
-
         return $this;
     }
 
     public function removePelicula(Pelicula $pelicula): static
     {
         $this->peliculas->removeElement($pelicula);
-
         return $this;
     }
 }

@@ -40,13 +40,13 @@ class Pelicula
     /**
      * @var Collection<int, Valoracion>
      */
-    #[ORM\OneToMany(targetEntity: Valoracion::class, mappedBy: 'pelicula')]
+    #[ORM\OneToMany(targetEntity: Valoracion::class, mappedBy: 'pelicula', orphanRemoval: true)]
     private Collection $valoraciones;
 
     /**
      * @var Collection<int, Ranking>
      */
-    #[ORM\ManyToMany(targetEntity: Ranking::class, mappedBy: 'pelicula')]
+    #[ORM\ManyToMany(targetEntity: Ranking::class, mappedBy: 'peliculas')]
     private Collection $rankings;
 
     public function __construct()
@@ -68,7 +68,6 @@ class Pelicula
     public function setApiId(int $apiId): static
     {
         $this->apiId = $apiId;
-
         return $this;
     }
 
@@ -80,7 +79,6 @@ class Pelicula
     public function setTitulo(string $titulo): static
     {
         $this->titulo = $titulo;
-
         return $this;
     }
 
@@ -92,7 +90,6 @@ class Pelicula
     public function setDescription(?string $description): static
     {
         $this->description = $description;
-
         return $this;
     }
 
@@ -104,7 +101,6 @@ class Pelicula
     public function setYear(int $year): static
     {
         $this->year = $year;
-
         return $this;
     }
 
@@ -116,7 +112,6 @@ class Pelicula
     public function setImageUrl(?string $image_url): static
     {
         $this->image_url = $image_url;
-
         return $this;
     }
 
@@ -128,7 +123,6 @@ class Pelicula
     public function setGenre(?string $genre): static
     {
         $this->genre = $genre;
-
         return $this;
     }
 
@@ -140,7 +134,6 @@ class Pelicula
     public function setStars(?float $stars): static
     {
         $this->stars = $stars;
-
         return $this;
     }
 
@@ -152,25 +145,22 @@ class Pelicula
         return $this->valoraciones;
     }
 
-    public function addValoracione(Valoracion $valoracione): static
+    public function addValoracion(Valoracion $valoracion): static
     {
-        if (!$this->valoraciones->contains($valoracione)) {
-            $this->valoraciones->add($valoracione);
-            $valoracione->setPelicula($this);
+        if (!$this->valoraciones->contains($valoracion)) {
+            $this->valoraciones->add($valoracion);
+            $valoracion->setPelicula($this);
         }
-
         return $this;
     }
 
-    public function removeValoracione(Valoracion $valoracione): static
+    public function removeValoracion(Valoracion $valoracion): static
     {
-        if ($this->valoraciones->removeElement($valoracione)) {
-            // set the owning side to null (unless already changed)
-            if ($valoracione->getPelicula() === $this) {
-                $valoracione->setPelicula(null);
+        if ($this->valoraciones->removeElement($valoracion)) {
+            if ($valoracion->getPelicula() === $this) {
+                $valoracion->setPelicula(null);
             }
         }
-
         return $this;
     }
 
@@ -188,7 +178,6 @@ class Pelicula
             $this->rankings->add($ranking);
             $ranking->addPelicula($this);
         }
-
         return $this;
     }
 
@@ -197,10 +186,13 @@ class Pelicula
         if ($this->rankings->removeElement($ranking)) {
             $ranking->removePelicula($this);
         }
-
         return $this;
     }
 
+    /**
+     * Calcula la media real basada en la colección de valoraciones.
+     * Utiliza el método getEstrellas() de Valoracion, que apunta a 'puntuacion'.
+     */
     public function getMediaReal(): float
     {
         if ($this->valoraciones->isEmpty()) {
@@ -209,7 +201,7 @@ class Pelicula
 
         $suma = 0;
         foreach ($this->valoraciones as $valoracion) {
-            // Esto fallaba antes porque faltaba el método en Valoracion.php
+            // Se asume que getEstrellas() devuelve $this->puntuacion en Valoracion.php
             $suma += $valoracion->getEstrellas() ?? 0;
         }
 

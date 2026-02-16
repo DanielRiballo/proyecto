@@ -1,183 +1,92 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Ranking de Críticas{% endblock %}
+{% block title %}🏆 Ranking de Películas{% endblock %}
 
 {% block stylesheets %}
     <style>
-        body { background: #0f172a; color: #f8fafc; font-family: 'Inter', sans-serif; min-height: 100vh; }
-
-        .ranking-header {
-            background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            font-weight: 800;
-        }
-
-        .category-btn {
-            background: rgba(255, 255, 255, 0.05);
-            color: #94a3b8;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 30px;
-            padding: 8px 20px;
-            text-decoration: none;
-            font-size: 0.85rem;
-            font-weight: 600;
-            transition: all 0.2s;
-        }
-        .category-btn:hover { background: rgba(255, 255, 255, 0.1); color: #fbbf24; }
-        .category-btn.active { background: #fbbf24 !important; color: #0f172a !important; border-color: #fbbf24; }
-
-        .ranking-card {
-            background: rgba(30, 41, 59, 0.7);
-            backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 24px;
-            overflow: hidden;
-        }
-
-        .table-custom { margin-bottom: 0; color: #f8fafc; }
-        .table-custom thead th {
-            background: rgba(15, 23, 42, 0.5);
-            border-bottom: 2px solid #fbbf24;
-            color: #94a3b8;
-            text-transform: uppercase;
-            font-size: 0.7rem;
-            padding: 20px;
-        }
-
-        .table-custom tbody tr { border-bottom: 1px solid rgba(255, 255, 255, 0.05); transition: background 0.3s; }
-        .table-custom tbody tr:hover { background: rgba(251, 191, 36, 0.05); }
-
-        .rank-badge { width: 35px; height: 35px; display: flex; align-items: center; justify-content: center; border-radius: 50%; font-weight: bold; }
-        .rank-1 { background: #fbbf24; color: #000; box-shadow: 0 0 15px rgba(251, 191, 36, 0.4); }
-        .rank-2 { background: #cbd5e1; color: #000; }
-        .rank-3 { background: #92400e; color: #fff; }
-
-        .movie-thumb { width: 50px; height: 75px; object-fit: cover; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.3); }
-
-        .movie-link { color: #f8fafc; text-decoration: none; font-weight: 700; transition: color 0.2s; }
-        .movie-link:hover { color: #fbbf24; }
-
-        .score-badge {
-            background: rgba(251, 191, 36, 0.1);
-            color: #fbbf24;
-            border: 1px solid rgba(251, 191, 36, 0.3);
-            padding: 6px 12px;
-            border-radius: 10px;
-            font-weight: 700;
-        }
-
-        /* Estilo para cuando no hay votos */
-        .score-empty { background: rgba(148, 163, 184, 0.1); color: #94a3b8; border-color: rgba(148, 163, 184, 0.2); }
-
-        .btn-back { color: #fbbf24; text-decoration: none; font-size: 0.9rem; font-weight: 600; }
-        .btn-back:hover { text-decoration: underline; }
-
-        .search-input {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            color: white;
-            border-radius: 12px;
-            padding: 12px 20px;
-            width: 100%;
-            max-width: 400px;
-            transition: all 0.3s;
-        }
-        .search-input:focus { outline: none; border-color: #fbbf24; background: rgba(255, 255, 255, 0.1); box-shadow: 0 0 0 4px rgba(251, 191, 36, 0.1); }
+        body { background: #81d4fa; color: #1e293b; font-family: 'Inter', sans-serif; min-height: 100vh; margin: 0; }
+        .ranking-header { color: #f59e0b; font-weight: 900; text-transform: uppercase; text-shadow: 2px 2px rgba(0,0,0,0.1); }
+        .category-btn { background: rgba(255, 255, 255, 0.4); color: #1e293b; border-radius: 30px; padding: 10px 25px; text-decoration: none; font-weight: 600; transition: all 0.2s; border: 1px solid rgba(255,255,255,0.2); }
+        .category-btn.active { background: #ffc107 !important; color: #000 !important; border-color: #f59e0b; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+        .ranking-card { background: #33475b; border-radius: 24px; overflow: hidden; margin-top: 20px; box-shadow: 0 15px 35px rgba(0,0,0,0.2); }
+        .table-custom { width: 100%; border-collapse: collapse; color: #f8fafc; }
+        .table-custom thead th { background: #243447; color: #94a3b8; padding: 20px; text-transform: uppercase; font-size: 0.85rem; border-bottom: 3px solid #f59e0b; letter-spacing: 1px; }
+        .table-custom tbody tr { border-bottom: 1px solid rgba(255,255,255,0.05); transition: background 0.3s; }
+        .table-custom tbody tr:hover { background: rgba(255,255,255,0.03); }
+        .rank-badge { width: 45px; height: 45px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto; font-size: 1.2rem; }
+        .movie-thumb { width: 55px; height: 80px; object-fit: cover; border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.3); }
+        .movie-link { color: #ffffff; text-decoration: none; font-weight: 700; font-size: 1.15rem; }
+        .movie-link:hover { color: #ffc107; }
+        .score-badge { background: #42556a; border: 1px solid rgba(255,255,255,0.1); padding: 8px 18px; border-radius: 12px; color: #ffc107; font-weight: bold; }
+        .search-input { background: rgba(255, 255, 255, 0.5); border: 2px solid transparent; padding: 15px 25px; border-radius: 15px; width: 100%; max-width: 450px; color: #1e293b; font-size: 1rem; }
     </style>
 {% endblock %}
 
 {% block body %}
-    <div class="container my-5">
-        <div class="d-flex justify-content-between align-items-end mb-4">
-            <div>
-                <a href="{{ path('app_admin_dashboard') }}" class="btn-back">← Volver al Panel</a>
-                <h1 class="display-5 ranking-header mt-2 mb-0">TOP {{ categoria_actual|default('GENERAL')|upper }}</h1>
-            </div>
-        </div>
+    <div class="container" style="max-width: 1200px; margin: 50px auto; padding: 0 20px;">
+        <a href="{{ path('app_home') }}" style="color: #f59e0b; text-decoration: none; font-weight: bold;">← Volver al Inicio</a>
+        <h1 class="ranking-header" style="font-size: 4.5rem; margin: 25px 0;">TOP {{ categoria_actual|default('GENERAL')|upper }}</h1>
 
-        <div class="mb-4">
-            <form action="{{ path('app_admin_ranking_genero', {genero: categoria_actual|default('')}) }}" method="get">
-                <input type="text" name="q" class="search-input" placeholder="Filtrar por título..." value="{{ texto_busqueda|default('') }}">
+        <div style="margin-bottom: 35px;">
+            <form action="{{ path('app_admin_ranking_genero', {genero: 'all'}) }}" method="get">
+                <input type="text" name="q" class="search-input" placeholder="Buscar por título o género..." value="{{ texto_busqueda }}">
             </form>
         </div>
 
-        <div class="d-flex gap-2 mb-5 flex-wrap">
-            <a href="{{ path('app_admin_ranking_genero') }}"
-               class="category-btn {{ (categoria_actual|default('') == '') ? 'active' : '' }}">Todos</a>
-
-            {% set generos_lista = {
-                'Action': 'Acción',
-                'Crime': 'Crimen',
-                'Drama': 'Drama',
-                'Sci-Fi': 'Ciencia Ficción',
-                'Biography': 'Biografía'
-            } %}
-
-            {% for key, nombre in generos_lista %}
-                <a href="{{ path('app_admin_ranking_genero', {genero: key}) }}"
-                   class="category-btn {{ (categoria_actual|default('') == key) ? 'active' : '' }}">{{ nombre }}</a>
+        <div style="display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 45px;">
+            <a href="{{ path('app_admin_ranking_genero', {genero: 'all'}) }}" class="category-btn {{ (categoria_actual == 'all' or categoria_actual is null) ? 'active' : '' }}">Todos</a>
+            {% for g in generos %}
+                <a href="{{ path('app_admin_ranking_genero', {genero: g}) }}" class="category-btn {{ categoria_actual == g ? 'active' : '' }}">{{ g }}</a>
             {% endfor %}
         </div>
 
-        <div class="ranking-card shadow-lg">
-            <div class="table-responsive">
-                <table class="table table-custom align-middle">
-                    <thead>
+        <div class="ranking-card">
+            <table class="table-custom">
+                <thead>
                     <tr>
-                        <th class="text-center" style="width: 80px;">#</th>
-                        <th>Película</th>
-                        <th class="text-center">Género</th>
-                        <th class="text-center">Nota Media</th>
-                        <th class="text-center">Votos</th>
+                        <th style="width: 100px;">POS</th>
+                        <th style="text-align: left;">PELÍCULA</th>
+                        <th>GÉNERO</th>
+                        <th>NOTA MEDIA</th>
+                        <th>VOTOS</th>
                     </tr>
-                    </thead>
-                    <tbody>
-                    {% for p in peliculas|default([]) %}
-                        {% set nota_final = p.mediaReal|default(0) %}
+                </thead>
+                <tbody>
+                    {% for p in peliculas %}
+                        {% set suma = 0 %}
+                        {% set totalVotos = p.valoraciones|length %}
+                        {% for v in p.valoraciones %}{% set suma = suma + v.puntuacion %}{% endfor %}
+                        {% set media = totalVotos > 0 ? (suma / totalVotos) : 0 %}
                         <tr>
-                            <td class="text-center">
-                                <div class="d-flex justify-content-center">
-                                    {% if loop.index == 1 %}<div class="rank-badge rank-1">1</div>
-                                    {% elseif loop.index == 2 %}<div class="rank-badge rank-2">2</div>
-                                    {% elseif loop.index == 3 %}<div class="rank-badge rank-3">3</div>
-                                    {% else %}<span class="text-secondary fw-bold">{{ loop.index }}</span>
-                                    {% endif %}
-                                </div>
+                            <td style="text-align: center; padding: 25px;">
+                                {% if loop.index == 1 %}<div class="rank-badge" style="background: #ffc107; color: #000;">🥇</div>
+                                {% elseif loop.index == 2 %}<div class="rank-badge" style="background: #e2e8f0; color: #000;">🥈</div>
+                                {% elseif loop.index == 3 %}<div class="rank-badge" style="background: #cd7f32; color: #fff;">🥉</div>
+                                {% else %}<span style="color: #94a3b8; font-weight: bold;">{{ loop.index }}</span>
+                                {% endif %}
                             </td>
                             <td>
-                                <div class="d-flex align-items-center">
-                                    <img src="{{ p.imageUrl|default('https://via.placeholder.com/50x75/1e293b/fbbf24?text=No+Image') }}" class="movie-thumb me-3" alt="{{ p.titulo|default('Peli') }}">
+                                <div style="display: flex; align-items: center; gap: 20px;">
+                                    <img src="{{ p.imageUrl }}" class="movie-thumb" alt="Poster">
                                     <div>
-                                        <a href="{{ path('app_pelicula_show', {id: p.id}) }}" class="movie-link d-block">
-                                            {{ p.titulo|default('Sin título') }}
-                                        </a>
-                                        <small class="text-secondary">{{ p.year|default('S/A') }}</small>
+                                        <a href="{{ path('app_admin_pelicula_show', {id: p.id}) }}" class="movie-link">{{ p.titulo }}</a>
+                                        <div style="color: #94a3b8; font-size: 0.85rem;">{{ p.year }}</div>
                                     </div>
                                 </div>
                             </td>
-                            <td class="text-center text-secondary small">
-                                <span class="badge bg-dark border border-secondary">{{ p.genre|default('N/A') }}</span>
+                            <td style="text-align: center;">
+                                <span style="background: #1e293b; color: #f8fafc; padding: 6px 14px; border-radius: 8px; font-size: 0.8rem;">{{ p.genre }}</span>
                             </td>
-                            <td class="text-center">
-                                <span class="score-badge {{ nota_final == 0 ? 'score-empty' : '' }}">
-                                    ★ {{ nota_final|number_format(1) }}
-                                </span>
+                            <td style="text-align: center;">
+                                <div class="score-badge">★ {{ media|number_format(1) }}</div>
                             </td>
-                            <td class="text-center text-secondary small">
-                                <i class="bi bi-chat-right-text me-1"></i> {{ p.valoraciones|length }} críticas
-                            </td>
-                        </tr>
-                    {% else %}
-                        <tr>
-                            <td colspan="5" class="text-center py-5 text-secondary italic">
-                                <p class="mb-0 py-4">No hay películas que coincidan con la búsqueda.</p>
+                            <td style="text-align: center; color: #cbd5e1;">
+                                💬 {{ totalVotos }}
                             </td>
                         </tr>
                     {% endfor %}
-                    </tbody>
-                </table>
-            </div>
+                </tbody>
+            </table>
         </div>
     </div>
 {% endblock %}

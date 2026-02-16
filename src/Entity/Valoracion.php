@@ -20,11 +20,11 @@ class Valoracion
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $comentario = null;
 
-    #[ORM\ManyToOne(inversedBy: 'valoraciones')]
+    #[ORM\ManyToOne(targetEntity: Usuario::class, inversedBy: 'valoraciones')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Usuario $usuario = null;
 
-    #[ORM\ManyToOne(inversedBy: 'valoraciones')]
+    #[ORM\ManyToOne(targetEntity: Pelicula::class, inversedBy: 'valoraciones')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Pelicula $pelicula = null;
 
@@ -41,7 +41,6 @@ class Valoracion
     public function setPuntuacion(int $puntuacion): static
     {
         $this->puntuacion = $puntuacion;
-
         return $this;
     }
 
@@ -53,7 +52,6 @@ class Valoracion
     public function setComentario(?string $comentario): static
     {
         $this->comentario = $comentario;
-
         return $this;
     }
 
@@ -65,7 +63,6 @@ class Valoracion
     public function setUsuario(?Usuario $usuario): static
     {
         $this->usuario = $usuario;
-
         return $this;
     }
 
@@ -77,12 +74,14 @@ class Valoracion
     public function setPelicula(?Pelicula $pelicula): static
     {
         $this->pelicula = $pelicula;
-
         return $this;
     }
 
+    /**
+     * Este método es el que llama Pelicula.php para calcular la media
+     */
     public function getEstrellas(): ?int
     {
-        return $this->estrellas;
+        return $this->puntuacion;
     }
 }

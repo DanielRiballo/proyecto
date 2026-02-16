@@ -1,125 +1,203 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Inicio{% endblock %}
+{% block title %}Inicio - Cine Ranking{% endblock %}
 
 {% block body %}
     <style>
-        /* Estilos para que se parezca a la foto del profesor */
         body {
             margin: 0;
             padding: 0;
-            background-color: #333;
+            background-color: #1a1a1a;
             background-image:
-                linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)),
-                url('{{ asset("images/fondo.jpg") }}');
+                linear-gradient(rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0.75)),
+                url('https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?q=80&w=2070&auto=format&fit=crop');
             background-size: cover;
             background-position: center;
-            background-attachment: fixed; /* Efecto elegante: el fondo no se mueve al hacer scroll */
-
-            font-family: sans-serif;
-        }
-        .top-bar {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-        }
-        .btn-login {
-            background-color: #2563eb;
-            color: white;
-            padding: 10px 20px;
-            text-decoration: none;
-            border-radius: 20px;
-            font-weight: bold;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-        }
-        .main-container {
+            background-attachment: fixed;
+            font-family: 'Poppins', 'Segoe UI', sans-serif;
+            overflow: hidden;
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
-            flex-direction: column;
         }
+
+        .main-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+        }
+
+        .logo-central {
+            background-color: white;
+            padding: 15px 45px;
+            border-radius: 15px;
+            margin-bottom: 50px;
+            font-weight: 900;
+            font-size: 2rem;
+            text-align: center;
+            color: #1a1a1a;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.6);
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
         .grid-menu {
             display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 20px;
-            max-width: 800px;
-            width: 100%;
-            padding: 20px;
+            grid-template-columns: repeat(2, 220px);
+            grid-template-rows: repeat(2, 220px);
+            gap: 25px;
         }
+
         .card-btn {
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            padding: 40px;
-            border-radius: 15px;
+            border-radius: 40px;
             color: white;
             text-decoration: none;
-            font-weight: bold;
-            font-size: 1.2rem;
-            transition: transform 0.2s;
-            box-shadow: 0 10px 15px rgba(0,0,0,0.2);
+            font-weight: 800;
+            font-size: 1.1rem;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            text-align: center;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.4);
+            border: none;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card-btn:hover {
+            transform: translateY(-12px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.6);
+        }
+
+        /* Colores de las tarjetas */
+        .card-blue { background: linear-gradient(135deg, #3b82f6, #2563eb); }   /* Rankings / Login */
+        .card-green { background: linear-gradient(135deg, #10b981, #059669); }  /* Registro */
+        .card-red { background: linear-gradient(135deg, #ef4444, #dc2626); }    /* Catálogo */
+        .card-orange { background: linear-gradient(135deg, #f97316, #ea580c); } /* Gestión */
+        .card-purple { background: linear-gradient(135deg, #a855f7, #9333ea); } /* Stats */
+
+        .card-locked {
+            background: rgba(255, 255, 255, 0.05);
+            border: 2px dashed rgba(255, 255, 255, 0.2);
+            cursor: not-allowed;
+            backdrop-filter: blur(10px);
+        }
+
+        .icon { font-size: 3.8rem; margin-bottom: 10px; }
+
+        .user-header {
+            position: absolute;
+            top: 30px;
+            right: 40px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            color: white;
+            background: rgba(255,255,255,0.1);
+            padding: 10px 25px;
+            border-radius: 50px;
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255,255,255,0.2);
+            font-weight: 600;
+        }
+
+        .btn-logout {
+            background: #ff4757;
+            color: white;
+            padding: 8px 18px;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 800;
+            font-size: 0.8rem;
+            transition: 0.3s;
             text-transform: uppercase;
         }
-        .card-btn:hover {
-            transform: scale(1.05);
-        }
-        .card-blue { background-color: #3b82f6; }   /* Rankings */
-        .card-red { background-color: #ef4444; }    /* Reviews */
-        .card-orange { background-color: #f97316; } /* Admin */
-        .card-purple { background-color: #8b5cf6; } /* Stats */
+        .btn-logout:hover { background: #ff6b81; transform: scale(1.05); }
 
-        .icon { font-size: 2rem; margin-bottom: 10px; }
-
-        .logo-central {
-            background-color: white;
-            padding: 10px 20px;
-            border-radius: 10px;
+        .welcome-text {
+            color: rgba(255,255,255,0.6);
             margin-bottom: 20px;
-            font-weight: bold;
-            text-align: center;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            font-size: 1rem;
+            letter-spacing: 1px;
         }
     </style>
 
-    <div class="top-bar">
-        {% if app.user %}
-            <span style="margin-right: 10px; font-weight: bold;">{{ app.user.email }}</span>
-            <a href="{{ path('app_logout') }}" class="btn-login" style="background-color: #dc3545;">CERRAR SESIÓN</a>
-        {% else %}
-            <a href="{{ path('app_login') }}" class="btn-login">INICIAR SESIÓN</a>
-
-            <a href="{{ path('app_register') }}" class="btn-login" style="background-color: #198754; margin-left: 10px;">REGISTRARSE</a>
-        {% endif %}
-    </div>
+    {# CABECERA DE USUARIO (Solo si está logueado) #}
+    {% if app.user %}
+        <div class="user-header">
+            <span>👤 {{ app.user.email }}</span>
+            <a href="{{ path('app_logout') }}" class="btn-logout">CERRAR SESIÓN</a>
+        </div>
+    {% endif %}
 
     <div class="main-container">
+        <div class="logo-central">🎬 CINE RANKING</div>
 
-        <div class="logo-central">
-            LAS MEJORES<br>PELICULAS
-        </div>
+        {% if app.user %}
+            <div class="welcome-text">PANEL DE CONTROL</div>
+        {% else %}
+            <div class="welcome-text">BIENVENIDO, POR FAVOR IDENTIFÍCATE</div>
+        {% endif %}
 
         <div class="grid-menu">
-            <a href="{{ path('app_admin_ranking_pelis') }}" class="card-btn card-blue">
-                <div class="icon">🏆</div>
-                RANKINGS
-            </a>
+            {% if app.user %}
+                {# --- VISTA PARA USUARIOS LOGUEADOS --- #}
 
-            <a href="{{ path('app_pelicula_index') }}" class="card-btn card-red">
-                <div class="icon">⭐⭐</div>
-                PELICULAS
-            </a>
+                {# 1. RANKINGS #}
+                <a href="{{ path('app_admin_ranking_genero', {'genero': 'all'}) }}" class="card-btn card-blue">
+                    <div class="icon">🏆</div>
+                    RANKINGS
+                </a>
 
-            <a href="{{ path('app_admin_dashboard') }}" class="card-btn card-orange">
-                <div class="icon">⚙️</div>
-                ADMIN
-            </a>
+                {# 2. CATÁLOGO #}
+                <a href="{{ path('app_pelicula_catalogo') }}" class="card-btn card-red">
+                    <div class="icon">🍿</div>
+                    CATÁLOGO
+                </a>
 
-            <a href="#" class="card-btn card-purple">
-                <div class="icon">📊</div>
-                STATS
-            </a>
+                {# 3. GESTIÓN (Solo Admin) #}
+                {% if is_granted('ROLE_ADMIN') %}
+                    <a href="{{ path('app_admin_pelicula_index') }}" class="card-btn card-orange">
+                        <div class="icon">⚙️</div>
+                        GESTIÓN
+                    </a>
+                {% else %}
+                    <div class="card-btn card-locked">
+                        <div class="icon" style="opacity: 0.3;">🔒</div>
+                        <span style="opacity: 0.4;">ADMIN ONLY</span>
+                    </div>
+                {% endif %}
+
+                {# 4. STATS (Dashboard) #}
+                <a href="{{ path('app_admin_dashboard') }}" class="card-btn card-purple">
+                    <div class="icon">📊</div>
+                    DASHBOARD
+                </a>
+
+            {% else %}
+                {# --- VISTA PARA USUARIOS NO LOGUEADOS --- #}
+
+                {# 1. INICIAR SESIÓN #}
+                <a href="{{ path('app_login') }}" class="card-btn card-blue" style="grid-column: span 1; grid-row: span 1;">
+                    <div class="icon">🔑</div>
+                    ENTRAR
+                </a>
+
+                {# 2. REGISTRO #}
+                <a href="{{ path('app_register') }}" class="card-btn card-green">
+                    <div class="icon">📝</div>
+                    REGISTRO
+                </a>
+
+                {# 3. INFO / CATALOGO PUBLICO (Opcional) #}
+                <div class="card-btn card-locked" style="grid-column: span 2; grid-row: span 1; height: 100px; margin-top: 20px;">
+                    <p style="margin: 0; font-size: 0.9rem;">Identifícate para valorar películas y ver el ranking mundial</p>
+                </div>
+            {% endif %}
         </div>
     </div>
 {% endblock %}
