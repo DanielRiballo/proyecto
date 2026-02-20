@@ -1,46 +1,86 @@
 <!DOCTYPE html>
-<html>
+<html lang="es">
     <head>
         <meta charset="UTF-8">
-        <title>{% block title %}Cine Ranking{% endblock %}</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>{% block title %}Cine Ranking Pro{% endblock %}</title>
+
         <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>🎬</text></svg>">
 
-        {# Importamos la fuente Poppins para que toda la web se vea moderna #}
-        <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800&display=swap" rel="stylesheet">
+        {# Fuente Pro #}
+        <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&display=swap" rel="stylesheet">
 
         <style>
-            /* Estilos globales para que todas las páginas tengan coherencia */
-            body {
-                font-family: 'Poppins', sans-serif;
-                margin: 0;
-                padding: 0;
-                background-color: #f1f5f9; /* Un gris muy claro para el fondo de las listas */
-                color: #1e293b;
+            :root {
+                --glass-bg: rgba(15, 23, 42, 0.7);
+                --glass-border: rgba(255, 255, 255, 0.1);
             }
 
-            /* Estilo para los mensajes Flash (Éxito/Error) que configuramos en el controlador */
+            body {
+                font-family: 'Plus Jakarta Sans', sans-serif;
+                margin: 0;
+                padding: 0;
+                color: white;
+                min-height: 100vh;
+                /* IMAGEN DE FONDO: Sala de cine desenfocada */
+                background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)),
+                            url('https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?q=80&w=2070&auto=format&fit=crop');
+                background-size: cover;
+                background-position: center;
+                background-attachment: fixed;
+            }
+
+            /* Contenedor principal con efecto cristal */
+            .main-wrapper {
+                min-height: 100vh;
+                display: flex;
+                flex-direction: column;
+                backdrop-filter: blur(8px); /* Desenfoca el fondo para resaltar el contenido */
+                -webkit-backdrop-filter: blur(8px);
+            }
+
+            /* Mensajes Flash Estilo Notificación Móvil */
             .flash-container {
                 position: fixed;
                 top: 20px;
                 right: 20px;
-                z-index: 1000;
+                z-index: 9999;
             }
+
             .flash-message {
+                background: var(--glass-bg);
+                backdrop-filter: blur(15px);
+                border: 1px solid var(--glass-border);
                 padding: 15px 25px;
-                border-radius: 10px;
-                margin-bottom: 10px;
+                border-radius: 20px;
                 color: white;
-                font-weight: bold;
-                box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-                animation: slideIn 0.5s ease-out;
+                font-weight: 600;
+                box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+                margin-bottom: 10px;
+                animation: slideIn 0.5s ease;
             }
-            .flash-success { background-color: #10b981; }
-            .flash-error { background-color: #ef4444; }
+            .flash-success { border-left: 5px solid #10b981; }
+            .flash-error { border-left: 5px solid #ef4444; }
 
             @keyframes slideIn {
                 from { transform: translateX(100%); opacity: 0; }
                 to { transform: translateX(0); opacity: 1; }
             }
+
+            /* Estilo para los botones generales (si los usas) */
+            .btn-pro {
+                background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+                border: none;
+                padding: 12px 24px;
+                border-radius: 12px;
+                color: white;
+                font-weight: bold;
+                cursor: pointer;
+                transition: 0.3s;
+                text-decoration: none;
+                display: inline-block;
+            }
+            .btn-pro:hover { transform: scale(1.05); filter: brightness(1.2); }
         </style>
 
         {% block stylesheets %}{% endblock %}
@@ -50,18 +90,29 @@
         {% endblock %}
     </head>
     <body>
-        {# Mensajes de alerta (Flash) #}
-        <div class="flash-container">
-            {% for label, messages in app.flashes %}
-                {% for message in messages %}
-                    <div class="flash-message flash-{{ label }}">
-                        {{ message }}
-                    </div>
+        <div class="main-wrapper">
+            <div class="flash-container">
+                {% for label, messages in app.flashes %}
+                    {% for message in messages %}
+                        <div class="flash-message flash-{{ label }}">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
                 {% endfor %}
-            {% endfor %}
+            </div>
+
+            {% block body %}{% endblock %}
         </div>
 
-        {# El contenido de cada página se inyectará aquí #}
-        {% block body %}{% endblock %}
+        <script>
+            // Desaparecer mensajes flash automáticamente
+            setTimeout(() => {
+                document.querySelectorAll('.flash-message').forEach(m => {
+                    m.style.transition = "0.5s";
+                    m.style.opacity = "0";
+                    setTimeout(() => m.remove(), 500);
+                });
+            }, 3000);
+        </script>
     </body>
 </html>

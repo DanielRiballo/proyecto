@@ -1,0 +1,112 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700;900&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background-color: #87CEEB !important;
+            font-family: 'Poppins', sans-serif;
+            padding-top: 30px;
+        }
+        .movie-card {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            height: 100%;
+            border: none;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+        .movie-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+        }
+        .poster-container {
+            height: 350px;
+            overflow: hidden;
+            position: relative;
+        }
+        .poster-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .rating-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: rgba(255,255,255,0.9);
+            padding: 5px 12px;
+            border-radius: 50px;
+            font-weight: bold;
+            color: #f59e0b;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            z-index: 10;
+        }
+    </style>
+{% endblock %}
+
+{% block body %}
+<div class="container pb-5">
+    {% for message in app.flashes('success') %}
+        <div class="alert alert-success rounded-pill text-center shadow-sm mb-4 border-0">
+            {{ message }}
+        </div>
+    {% endfor %}
+
+    <h1 class="text-center fw-black mb-2" style="font-weight: 900; color: #1e293b; letter-spacing: -1px;">EL CATÁLOGO</h1>
+    <p class="text-center text-muted mb-4">Películas ordenadas por calidad de estrellas</p>
+
+    {# --- BUSCADOR --- #}
+    <div class="row justify-content-center mb-5">
+        <div class="col-md-6">
+            <form action="{{ path('app_pelicula_catalogo') }}" method="get" class="d-flex gap-2 p-2 bg-white rounded-pill shadow-sm">
+                <input type="text" name="q" class="form-control border-0 bg-transparent ps-4" placeholder="Buscar por título o género..." value="{{ texto_busqueda }}">
+                <button type="submit" class="btn btn-primary rounded-pill px-4">🔍</button>
+            </form>
+            <div class="text-center mt-3">
+                <a href="{{ path('app_home') }}" class="text-white text-decoration-none small fw-bold">← Volver al Inicio</a>
+            </div>
+        </div>
+    </div>
+
+    {# --- GRID DE PELÍCULAS --- #}
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4 g-4">
+        {# IMPORTANTE: Usamos peliculas_con_nota que viene del controlador #}
+        {% for item in peliculas_con_nota %}
+            <div class="col">
+                <div class="movie-card d-flex flex-column">
+                    <div class="poster-container">
+                        {# Accedemos a la película a través de item.peli #}
+                        <img src="{{ item.peli.imageUrl ?: 'https://via.placeholder.com/350x500' }}" alt="{{ item.peli.titulo }}">
+
+                        {# Usamos la media ya calculada en el controlador: item.media #}
+                        <div class="rating-badge">
+                            ★ {{ item.media|number_format(1) }}
+                        </div>
+                    </div>
+                    <div class="card-body p-3 text-center">
+                        <h6 class="fw-bold text-truncate mb-1" title="{{ item.peli.titulo }}">
+                            {{ item.peli.titulo }}
+                        </h6>
+                        <small class="text-muted d-block mb-3">{{ item.peli.genre }}</small>
+                        <a href="{{ path('app_admin_pelicula_show', {id: item.peli.id}) }}" class="btn btn-sm btn-dark w-100 rounded-pill fw-bold">
+                            Detalles y Votar
+                        </a>
+                    </div>
+                </div>
+            </div>
+        {% else %}
+            <div class="col-12 text-center mt-5">
+                <div class="p-5 bg-white bg-opacity-25 rounded-4">
+                    <h3 class="text-white fw-bold">No se han encontrado películas</h3>
+                    <p class="text-white-50">Intenta con otro título o género</p>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

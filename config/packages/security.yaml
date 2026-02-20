@@ -22,18 +22,14 @@ security:
                 default_target_path: app_home
             logout:
                 path: app_logout
-                # Redirige a la página principal al cerrar sesión
                 target: app_home
 
     access_control:
-        # Páginas públicas (Cualquiera puede verlas)
+        - { path: ^/admin, roles: ROLE_ADMIN }
         - { path: ^/login, roles: PUBLIC_ACCESS }
         - { path: ^/register, roles: PUBLIC_ACCESS }
         - { path: ^/$, roles: PUBLIC_ACCESS }
-
-        # Páginas protegidas (Solo usuarios logueados)
-        - { path: ^/ranking, roles: IS_AUTHENTICATED_FULLY }
+        - { path: ^/rankings, roles: IS_AUTHENTICATED_FULLY }
+        - { path: ^/ranking/\d+, roles: IS_AUTHENTICATED_FULLY }
         - { path: ^/peli/\d+, roles: IS_AUTHENTICATED_FULLY }
-
-        # Panel de administración (Solo ADMIN)
-        - { path: ^/admin, roles: ROLE_ADMIN }
+        - { path: ^/catalogo, roles: IS_AUTHENTICATED_FULLY }

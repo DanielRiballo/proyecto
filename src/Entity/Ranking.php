@@ -19,14 +19,12 @@ class Ranking
     private ?string $nombre = null;
 
     #[ORM\ManyToOne(inversedBy: 'rankings')]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\JoinColumn(nullable: true)]
     private ?Usuario $usuario = null;
 
-    /**
-     * @var Collection<int, Pelicula>
-     */
-    // El inversedBy apunta a la propiedad $rankings de la clase Pelicula
     #[ORM\ManyToMany(targetEntity: Pelicula::class, inversedBy: 'rankings')]
+    #[ORM\JoinTable(name: 'ranking_pelicula')]
+    #[ORM\OrderBy(['id' => 'ASC'])]
     private Collection $peliculas;
 
     public function __construct()
@@ -61,9 +59,6 @@ class Ranking
         return $this;
     }
 
-    /**
-     * @return Collection<int, Pelicula>
-     */
     public function getPeliculas(): Collection
     {
         return $this->peliculas;
@@ -80,6 +75,17 @@ class Ranking
     public function removePelicula(Pelicula $pelicula): static
     {
         $this->peliculas->removeElement($pelicula);
+        return $this;
+    }
+
+    public function __toString(): string
+    {
+        return $this->nombre ?? 'Nuevo Ranking';
+    }
+
+    public function setPeliculas(Collection $peliculas): static
+    {
+        $this->peliculas = $peliculas;
         return $this;
     }
 }

@@ -23,9 +23,9 @@ class PeliculaType extends AbstractType
             ->add('stars')
             ->add('rankings', EntityType::class, [
                 'class' => Ranking::class,
-                'choice_label' => 'id', // Puedes cambiar 'id' por 'name' si tu Ranking tiene nombre
+                'choice_label' => 'id',
                 'multiple' => true,
-                'required' => false, // <--- ESTA ES LA LÍNEA MÁGICA QUE SOLUCIONA TU ERROR
+                'required' => false,
             ])
         ;
     }

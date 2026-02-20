@@ -21,7 +21,6 @@
             box-shadow: 0 4px 15px rgba(0,0,0,0.05);
         }
 
-        /* GRID 4x4 IDÉNTICO A CARTELERA */
         .admin-grid {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
@@ -64,28 +63,54 @@
             font-weight: 700;
             color: #1a1a1a;
             margin-bottom: 5px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
 
         .card-actions {
-            padding: 0 20px 20px;
+            padding: 0 15px 20px;
             display: flex;
-            gap: 10px;
+            gap: 8px;
         }
 
         .btn-admin {
             flex: 1;
-            padding: 8px;
+            padding: 8px 5px;
             border-radius: 8px;
             text-decoration: none;
             font-weight: 600;
             text-align: center;
-            font-size: 0.85rem;
+            font-size: 0.75rem;
+            border: none;
+            display: inline-block;
         }
 
         .btn-view { background: #f3f4f6; color: #374151; }
         .btn-edit { background: #fca542; color: white; }
 
-        /* BOTÓN VOLVER ESTILO PANEL */
+        .btn-delete {
+            background: #fee2e2;
+            color: #dc2626;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .btn-delete:hover {
+            background: #dc2626;
+            color: white;
+        }
+
+        .badge-api {
+            background: #e0f2fe;
+            color: #0369a1;
+            font-size: 0.65rem;
+            padding: 2px 8px;
+            border-radius: 10px;
+            font-weight: bold;
+            display: inline-block;
+            margin-top: 5px;
+        }
+
         .btn-back-pill {
             display: inline-flex;
             align-items: center;
@@ -97,12 +122,6 @@
             font-weight: 600;
             transition: 0.3s;
             border: 1px solid #d1d5db;
-        }
-
-        .btn-back-pill:hover {
-            background: #d1d5db;
-            color: #1f2937;
-            transform: translateX(-5px);
         }
 
         .btn-new {
@@ -119,9 +138,18 @@
     </style>
 
     <div class="admin-container">
+        {% for label, messages in app.flashes %}
+            {% for message in messages %}
+                <div class="alert alert-{{ label == 'danger' ? 'danger' : 'success' }} rounded-pill px-4 mb-4">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endfor %}
+
         <div class="admin-header">
             <div>
                 <h1 class="fw-bold mb-0">🎬 Gestión de Catálogo</h1>
+                <p class="text-muted mb-0">Administra las películas cargadas (Local + API)</p>
             </div>
             <a href="{{ path('app_admin_pelicula_new') }}" class="btn-new">
                 + Nueva Película
@@ -135,20 +163,32 @@
                         <img src="{{ pelicula.imageUrl }}" class="card-img-top" alt="{{ pelicula.titulo }}">
                     </div>
                     <div class="card-body">
-                        <div class="card-title">{{ pelicula.titulo }}</div>
-                        <small class="text-muted">ID: {{ pelicula.id }}</small>
+                        <div class="card-title" title="{{ pelicula.titulo }}">{{ pelicula.titulo }}</div>
+                        <div class="d-flex flex-column align-items-center">
+                            <small class="text-muted">ID: {{ pelicula.id }}</small>
+                            {# El distintivo ahora está correctamente dentro del bucle #}
+                            <span class="badge-api">API SOURCE</span>
+                        </div>
                     </div>
+
                     <div class="card-actions">
                         <a href="{{ path('app_admin_pelicula_show', {id: pelicula.id}) }}" class="btn-admin btn-view">Ver</a>
                         <a href="{{ path('app_admin_pelicula_edit', {id: pelicula.id}) }}" class="btn-admin btn-edit">Editar</a>
+
+                        <form method="post" action="{{ path('app_admin_pelicula_delete', {id: pelicula.id}) }}" onsubmit="return confirm('¿Eliminar {{ pelicula.titulo }}?');" style="flex: 1;">
+                            <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ pelicula.id) }}">
+                            <button class="btn-admin btn-delete" style="width: 100%;">Borrar</button>
+                        </form>
                     </div>
+                </div>
+            {% else %}
+                <div class="text-center py-5" style="grid-column: 1 / -1;">
+                    <p class="text-muted">No hay películas en el catálogo.</p>
                 </div>
             {% endfor %}
         </div>
-        <br>
-        <br>
 
-        <div class="text-center mt-5">
+        <div class="text-center mt-5 py-5">
             <a href="{{ path('app_admin_dashboard') }}" class="btn-back-pill">
                 ⬅ Volver al Panel de Control
             </a>

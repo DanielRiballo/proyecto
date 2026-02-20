@@ -77,9 +77,6 @@ class Valoracion
         return $this;
     }
 
-    /**
-     * Este método es el que llama Pelicula.php para calcular la media
-     */
     public function getEstrellas(): ?int
     {
         return $this->puntuacion;

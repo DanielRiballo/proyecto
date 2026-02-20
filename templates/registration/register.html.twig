@@ -4,33 +4,30 @@
 
 {% block body %}
     <style>
-        /* 1. Fondo de Cine (Igual que la portada) */
         body {
             margin: 0;
             padding: 0;
             background-color: #333;
-            /* Usamos la misma imagen de fondo oscurecida */
             background-image:
                 linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)),
-                url('{{ asset("images/fondo.jpg") }}'); /* Si no tienes la foto descargada, usa la url de internet de antes */
+                url('{{ asset("images/fondo.jpg") }}');
             background-size: cover;
             background-position: center;
             background-attachment: fixed;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             height: 100vh;
-            display: flex; /* Centrado perfecto */
+            display: flex;
             justify-content: center;
             align-items: center;
         }
 
-        /* 2. La Tarjeta Blanca Central */
         .register-card {
             background: white;
             padding: 40px;
             border-radius: 20px;
             box-shadow: 0 15px 35px rgba(0,0,0,0.5);
             width: 100%;
-            max-width: 450px; /* Ancho máximo elegante */
+            max-width: 450px;
             text-align: center;
         }
 
@@ -47,14 +44,12 @@
             font-size: 0.9rem;
         }
 
-        /* 3. Estilos de los inputs (Campos de texto) */
-        /* Symfony genera divs alrededor de los inputs, los estilizamos aquí */
+
         .form-group {
             margin-bottom: 20px;
             text-align: left;
         }
 
-        /* Etiquetas (Email, Password) */
         .form-group label {
             display: block;
             margin-bottom: 8px;
@@ -63,7 +58,6 @@
             font-size: 0.9rem;
         }
 
-        /* Las cajitas de texto */
         .form-control {
             width: 100%;
             padding: 12px 15px;
@@ -71,15 +65,14 @@
             border-radius: 10px;
             font-size: 1rem;
             transition: border-color 0.3s;
-            box-sizing: border-box; /* Para que el padding no rompa el ancho */
+            box-sizing: border-box;
         }
 
         .form-control:focus {
-            border-color: #fca542; /* Naranja al escribir */
+            border-color: #fca542;
             outline: none;
         }
 
-        /* 4. Checkbox de Términos (siempre da guerra, así se arregla) */
         .terms-wrapper {
             display: flex;
             align-items: center;
@@ -92,11 +85,10 @@
         .terms-wrapper input {
             width: 20px;
             height: 20px;
-            accent-color: #fca542; /* Checkbox naranja */
+            accent-color: #fca542;
             cursor: pointer;
         }
 
-        /* 5. Botón de Registro */
         .btn-register {
             background-color: #fca542;
             color: white;
@@ -116,7 +108,6 @@
             transform: scale(1.02);
         }
 
-        /* 6. Enlace a Login */
         .login-link {
             display: block;
             margin-top: 20px;
@@ -129,7 +120,6 @@
             text-decoration: underline;
         }
 
-        /* Ocultar errores feos de lista y ponerlos bonitos (opcional) */
         .form-error {
             color: #dc3545;
             font-size: 0.85rem;

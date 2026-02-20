@@ -12,10 +12,7 @@ class LoginController extends AbstractController
     #[Route('/login', name: 'app_login')]
     public function index(AuthenticationUtils $authenticationUtils): Response
     {
-        // Obtener error de login si lo hay
         $error = $authenticationUtils->getLastAuthenticationError();
-
-        // Último nombre de usuario introducido
         $lastUsername = $authenticationUtils->getLastUsername();
 
         return $this->render('login/index.html.twig', [
@@ -27,7 +24,6 @@ class LoginController extends AbstractController
     #[Route('/logout', name: 'app_logout')]
     public function logout(): void
     {
-        // Este método puede estar vacío, lo intercepta el firewall
         throw new \LogicException('This method can be blank - it will be intercepted by the logout key on your firewall.');
     }
 }

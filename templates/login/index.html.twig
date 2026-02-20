@@ -4,26 +4,23 @@
 
 {% block body %}
     <style>
-        /* 1. FONDO DE CINE */
         body {
             margin: 0;
             padding: 0;
             background-color: #333;
-            /* Usamos la misma imagen de fondo oscurecida */
             background-image:
                 linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)),
-                url('{{ asset("images/fondo.jpg") }}'); /* Si usas URL de internet, cámbialo aquí */
+                url('{{ asset("images/fondo.jpg") }}');
             background-size: cover;
             background-position: center;
             background-attachment: fixed;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             height: 100vh;
-            display: flex; /* Centrado vertical y horizontal */
+            display: flex;
             justify-content: center;
             align-items: center;
         }
 
-        /* 2. TARJETA BLANCA */
         .login-card {
             background: white;
             padding: 40px;
@@ -43,7 +40,6 @@
             font-weight: bold;
         }
 
-        /* 3. INPUTS */
         .form-group {
             margin-bottom: 20px;
             text-align: left;
@@ -68,11 +64,10 @@
         }
 
         .form-control:focus {
-            border-color: #fca542; /* Naranja al escribir */
+            border-color: #fca542;
             outline: none;
         }
 
-        /* 4. BOTÓN */
         .btn-login {
             background-color: #fca542;
             color: white;
@@ -92,7 +87,6 @@
             transform: scale(1.02);
         }
 
-        /* 5. ERRORES */
         .alert-danger {
             background-color: #fee2e2;
             color: #dc2626;

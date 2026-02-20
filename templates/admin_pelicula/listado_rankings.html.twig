@@ -1,0 +1,194 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mis Rankings{% endblock %}
+
+{% block body %}
+<style>
+    body {
+        background-color: #0b1120;
+        font-family: 'Segoe UI', system-ui, sans-serif;
+        color: white;
+    }
+
+    .container-rankings {
+        max-width: 1000px;
+        margin: 50px auto;
+        padding: 0 20px 100px 20px;
+    }
+
+    .page-header {
+        text-align: center;
+        margin-bottom: 50px;
+    }
+
+    .page-header h1 {
+        font-weight: 800;
+        font-size: 3rem;
+        text-shadow: 0 0 20px rgba(67, 97, 238, 0.5);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 15px;
+    }
+
+    .trophy-icon { font-size: 3rem; animation: float 3s ease-in-out infinite; }
+
+    .rankings-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+        gap: 25px;
+        margin-bottom: 60px;
+    }
+
+    .ranking-card {
+        background: rgba(15, 23, 42, 0.8);
+        border: 2px solid #3b82f6;
+        border-radius: 24px;
+        padding: 25px;
+        box-shadow: 0 0 15px rgba(59, 130, 246, 0.2);
+        transition: all 0.3s ease;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+
+    .ranking-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 0 30px rgba(59, 130, 246, 0.4);
+        border-color: #60a5fa;
+    }
+
+    .ranking-title { font-size: 1.6rem; font-weight: 800; margin-bottom: 5px; color: #ffffff; }
+    .ranking-info { color: #94a3b8; font-size: 0.9rem; margin-bottom: 20px; }
+
+    .card-actions {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .btn-enter {
+        background: linear-gradient(90deg, #3b82f6 0%, #2563eb 100%);
+        color: white;
+        padding: 12px;
+        border-radius: 12px;
+        text-decoration: none;
+        font-weight: 700;
+        text-align: center;
+        text-transform: uppercase;
+        font-size: 0.85rem;
+        transition: all 0.3s ease;
+    }
+
+    .admin-controls {
+        display: flex;
+        gap: 10px;
+        margin-top: 5px;
+        padding-top: 15px;
+        border-top: 1px solid rgba(255,255,255,0.1);
+    }
+
+    .btn-admin-edit {
+        flex: 2;
+        background: rgba(251, 191, 36, 0.1);
+        color: #fbbf24;
+        border: 1px solid #fbbf24;
+        padding: 8px;
+        border-radius: 10px;
+        text-align: center;
+        font-size: 0.8rem;
+        font-weight: 700;
+        text-decoration: none;
+        transition: 0.3s;
+    }
+    .btn-admin-edit:hover { background: #fbbf24; color: #000; }
+
+    .btn-admin-delete {
+        flex: 1;
+        background: rgba(239, 68, 68, 0.1);
+        color: #ef4444;
+        border: 1px solid #ef4444;
+        padding: 8px;
+        border-radius: 10px;
+        cursor: pointer;
+        transition: 0.3s;
+    }
+    .btn-admin-delete:hover { background: #ef4444; color: white; }
+
+    .btn-create-float {
+        position: fixed; bottom: 30px; right: 30px;
+        background: #10b981; color: white;
+        width: 60px; height: 60px; border-radius: 50%;
+        display: flex; align-items: center; justify-content: center;
+        font-size: 1.5rem; text-decoration: none;
+        box-shadow: 0 10px 20px rgba(16, 185, 129, 0.4);
+        transition: 0.3s; z-index: 100;
+    }
+    .btn-create-float:hover { transform: scale(1.1) rotate(90deg); background: #059669; }
+
+    .btn-back-float {
+        position: fixed; top: 20px; left: 20px;
+        color: #94a3b8; text-decoration: none; font-weight: bold;
+        background: rgba(0,0,0,0.3); padding: 8px 15px; border-radius: 20px;
+        backdrop-filter: blur(5px); z-index: 100;
+    }
+
+    @keyframes float {
+        0%, 100% { transform: translateY(0); }
+        50% { transform: translateY(-10px); }
+    }
+</style>
+
+<a href="{{ path('app_home') }}" class="btn-back-float">← Inicio</a>
+
+{# BOTÓN PARA CREAR (Solo Admin) #}
+{% if is_granted('ROLE_ADMIN') %}
+    <a href="{{ path('app_admin_ranking_new') }}" class="btn-create-float" title="Crear Nuevo Ranking">
+        ➕
+    </a>
+{% endif %}
+
+<div class="container-rankings">
+    <div class="page-header">
+        <h1><span class="trophy-icon">🏆</span> Rankings Disponibles</h1>
+    </div>
+
+    <div class="rankings-grid">
+        {% for ranking in rankings %}
+            <div class="ranking-card">
+                <div>
+                    <h2 class="ranking-title">{{ ranking.nombre }}</h2>
+                    <div class="ranking-info">
+                        <span>🎬</span> {{ ranking.peliculas|length }} películas en la lista
+                    </div>
+                </div>
+
+                <div class="card-actions">
+                    {# ESTO LO VEN TODOS: Votar/Ordenar su lista #}
+                    <a href="{{ path('app_ranking_view', {'id': ranking.id}) }}" class="btn-enter">
+                        ⭐ Mi Votación Personal
+                    </a>
+
+                    {# ESTO SOLO EL ADMIN: Editar estructura o Borrar #}
+                    {% if is_granted('ROLE_ADMIN') %}
+                        <div class="admin-controls">
+                            <a href="{{ path('app_admin_ranking_edit', {'id': ranking.id}) }}" class="btn-admin-edit">
+                                ⚙️ Gestionar Pelis
+                            </a>
+
+                            <form method="post" action="{{ path('app_admin_ranking_delete', {'id': ranking.id}) }}" onsubmit="return confirm('¿Eliminar este ranking permanentemente?');" style="display: contents;">
+                                <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ ranking.id) }}">
+                                <button class="btn-admin-delete">🗑️</button>
+                            </form>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        {% else %}
+            <div style="grid-column: 1/-1; text-align: center; padding: 50px; opacity: 0.5;">
+                <h3>No hay rankings creados todavía.</h3>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

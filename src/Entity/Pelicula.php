@@ -37,17 +37,14 @@ class Pelicula
     #[ORM\Column(nullable: true)]
     private ?float $stars = null;
 
-    /**
-     * @var Collection<int, Valoracion>
-     */
     #[ORM\OneToMany(targetEntity: Valoracion::class, mappedBy: 'pelicula', orphanRemoval: true)]
     private Collection $valoraciones;
 
-    /**
-     * @var Collection<int, Ranking>
-     */
     #[ORM\ManyToMany(targetEntity: Ranking::class, mappedBy: 'peliculas')]
     private Collection $rankings;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $image = null;
 
     public function __construct()
     {
@@ -137,9 +134,6 @@ class Pelicula
         return $this;
     }
 
-    /**
-     * @return Collection<int, Valoracion>
-     */
     public function getValoraciones(): Collection
     {
         return $this->valoraciones;
@@ -164,9 +158,6 @@ class Pelicula
         return $this;
     }
 
-    /**
-     * @return Collection<int, Ranking>
-     */
     public function getRankings(): Collection
     {
         return $this->rankings;
@@ -189,10 +180,6 @@ class Pelicula
         return $this;
     }
 
-    /**
-     * Calcula la media real basada en la colección de valoraciones.
-     * Utiliza el método getEstrellas() de Valoracion, que apunta a 'puntuacion'.
-     */
     public function getMediaReal(): float
     {
         if ($this->valoraciones->isEmpty()) {
@@ -201,7 +188,6 @@ class Pelicula
 
         $suma = 0;
         foreach ($this->valoraciones as $valoracion) {
-            // Se asume que getEstrellas() devuelve $this->puntuacion en Valoracion.php
             $suma += $valoracion->getEstrellas() ?? 0;
         }
 

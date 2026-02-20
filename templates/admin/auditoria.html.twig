@@ -1,0 +1,77 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Auditoría del Sistema{% endblock %}
+
+{% block body %}
+<style>
+    .audit-container {
+        padding: 40px;
+        max-width: 800px;
+        margin: 0 auto;
+    }
+    .audit-card {
+        background: rgba(30, 41, 59, 0.7);
+        backdrop-filter: blur(12px);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 24px;
+        padding: 30px;
+    }
+    .audit-header {
+        text-align: center;
+        margin-bottom: 30px;
+    }
+    .audit-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 20px;
+    }
+    .audit-item {
+        background: rgba(15, 23, 42, 0.5);
+        padding: 20px;
+        border-radius: 16px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border: 1px solid rgba(255, 255, 255, 0.05);
+    }
+    .audit-label { color: #94a3b8; font-weight: 600; text-transform: uppercase; font-size: 0.8rem; }
+    .audit-value { color: #fbbf24; font-size: 1.5rem; font-weight: 800; }
+    .btn-back {
+        display: inline-block;
+        margin-top: 20px;
+        color: #38bdf8;
+        text-decoration: none;
+        font-weight: 600;
+    }
+</style>
+
+<div class="audit-container">
+    <div class="audit-card">
+        <div class="audit-header">
+            <h1 style="color: white; margin: 0;">📊 Informe de Auditoría</h1>
+            <p style="color: #94a3b8;">Estado actual de la plataforma</p>
+        </div>
+
+        <div class="audit-grid">
+            <div class="audit-item">
+                <span class="audit-label">👤 Usuarios Registrados</span>
+                <span class="audit-value">{{ total_usuarios }}</span>
+            </div>
+            <div class="audit-item">
+                <span class="audit-label">🎬 Películas en Catálogo</span>
+                <span class="audit-value">{{ total_peliculas }}</span>
+            </div>
+            <div class="audit-item">
+                <span class="audit-label">💬 Comentarios/Valoraciones</span>
+                <span class="audit-value">{{ total_comentarios }}</span>
+            </div>
+            <div class="audit-item">
+                <span class="audit-label">🏆 Rankings Creados</span>
+                <span class="audit-value">{{ total_rankings }}</span>
+            </div>
+        </div>
+
+        <a href="{{ path('app_admin_dashboard') }}" class="btn-back">← Volver al Panel</a>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Importar Películas API{% endblock %}
+
+{% block body %}
+<div class="container mt-5 text-center">
+    <div class="card bg-dark text-white p-5 border-secondary">
+        <h1 class="display-4">🌐 Sincronización API</h1>
+        <p class="lead text-muted">Conecta con una API externa (ej: TMDB) para traer películas automáticamente.</p>
+
+        <div class="mt-4">
+            <div class="alert alert-info">
+                🚧 <strong>Zona de Importación:</strong> Aquí iría el formulario o botón para lanzar la petición a la API externa.
+            </div>
+
+            <button class="btn btn-success btn-lg px-5 mt-3" disabled>
+                Iniciar Importación (Demo)
+            </button>
+        </div>
+
+        <div class="mt-5">
+            <a href="{{ path('app_admin_dashboard') }}" class="btn btn-outline-light">← Volver al Dashboard</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

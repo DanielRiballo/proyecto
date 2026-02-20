@@ -1,93 +1,147 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}{{ pelicula ? pelicula.titulo : 'Catálogo de Películas' }}{% endblock %}
+{% block stylesheets %}
+    {{ parent() }}
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body { background-color: #87CEEB !important; font-family: 'Poppins', sans-serif; padding-top: 30px; } /* Añadido padding para compensar el nav */
+        .movie-card {
+            background: white; border-radius: 20px; overflow: hidden;
+            transition: all 0.3s ease; height: 100%; border: none;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+        .movie-card:hover { transform: translateY(-10px); box-shadow: 0 15px 30px rgba(0,0,0,0.2); }
+        .poster-container { height: 350px; overflow: hidden; position: relative; }
+        .poster-container img { width: 100%; height: 100%; object-fit: cover; }
+
+        .rating-badge {
+            position: absolute; top: 10px; right: 10px;
+            background: rgba(255,255,255,0.9); padding: 5px 12px;
+            border-radius: 50px; font-weight: bold; color: #f59e0b;
+        }
+
+        .valoracion-item {
+            border-left: 4px solid #3b82f6; background-color: #ffffff;
+            padding: 15px; margin-bottom: 15px; border-radius: 12px;
+        }
+        .form-valorar {
+            background-color: #f1f5f9; padding: 25px;
+            border-radius: 20px; border: 1px solid #e2e8f0;
+        }
+    </style>
+{% endblock %}
 
 {% block body %}
-    <style>
-        body { background-color: #fca542; font-family: 'Poppins', sans-serif; margin: 0; }
-        .container-custom { max-width: 1100px; margin: 40px auto; background: white; padding: 40px; border-radius: 30px; box-shadow: 0 20px 40px rgba(0,0,0,0.2); }
+<div class="container pb-5">
+    {% for message in app.flashes('success') %}
+        <div class="alert alert-success rounded-pill text-center shadow-sm mb-4 border-0">
+            {{ message }}
+        </div>
+    {% endfor %}
 
-        /* Estilos Catálogo (Grid de fotos) */
-        .movie-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 25px; margin-top: 30px; }
-        .movie-card { text-decoration: none; color: inherit; transition: 0.3s; text-align: center; }
-        .movie-card:hover { transform: translateY(-10px); }
-        .movie-card img { width: 100%; height: 280px; object-fit: cover; border-radius: 20px; box-shadow: 0 8px 15px rgba(0,0,0,0.1); }
-        .movie-card h4 { margin: 10px 0; color: #1e293b; }
+    {% if pelicula is null %}
+        {# --- VISTA CATÁLOGO --- #}
+        <h1 class="text-center fw-black mb-2" style="font-weight: 900; color: #1e293b;">EL CATÁLOGO</h1>
+        <p class="text-center text-muted mb-4">Películas ordenadas por la comunidad</p>
 
-        /* Tus estilos de la Ficha Detalle */
-        .movie-detail-container { display: flex; gap: 40px; }
-        .movie-poster { flex: 0 0 350px; }
-        .movie-poster img { width: 100%; border-radius: 20px; box-shadow: 0 12px 25px rgba(0,0,0,0.15); }
-        .movie-info { flex: 1; }
-        .description-box { border-left: 5px solid #fca542; padding-left: 20px; margin: 20px 0; line-height: 1.6; color: #4b5563; }
-        .vote-section { padding: 25px; background: #fffaf5; border-radius: 20px; border: 2px dashed #fca542; margin-bottom: 25px; }
-        .star-rating { display: flex; flex-direction: row-reverse; justify-content: flex-end; gap: 5px; }
-        .star-rating input { display: none; }
-        .star-rating label { font-size: 40px; color: #cbd5e1; cursor: pointer; }
-        .star-rating input:checked ~ label { color: #f1c40f; }
-        .btn-send-vote { background: #1e293b; color: white; border: none; padding: 14px; border-radius: 12px; width: 100%; cursor: pointer; font-weight: bold; }
-        .comment-item { background: #f8fafc; padding: 15px; border-radius: 15px; margin-bottom: 12px; border-left: 4px solid #fca542; }
-    </style>
-
-    <div class="container-custom">
-        {% if pelicula %}
-            {# --- ESTA ES TU FICHA DETALLE --- #}
-            <div class="movie-detail-container">
-                <div class="movie-poster">
-                    <img src="{{ pelicula.imageUrl }}" alt="{{ pelicula.titulo }}">
+        <div class="row justify-content-center mb-5">
+            <div class="col-md-6">
+                <form action="{{ path('app_pelicula_catalogo') }}" method="get" class="d-flex gap-2 p-2 bg-white rounded-pill shadow-sm">
+                    <input type="text" name="q" class="form-control border-0 bg-transparent ps-4" placeholder="Buscar por título o género..." value="{{ texto_busqueda }}">
+                    <button type="submit" class="btn btn-primary rounded-pill px-4">🔍</button>
+                </form>
+                {# Enlace de retorno manual ya que no hay navbar #}
+                <div class="text-center mt-3">
+                    <a href="{{ path('app_home') }}" class="text-white text-decoration-none small">← Volver al Inicio</a>
                 </div>
-                <div class="movie-info">
-                    <h1 style="font-size: 2.8rem; margin:0;">{{ pelicula.titulo }}</h1>
-                    <p>📅 {{ pelicula.year }} | 🎭 {{ pelicula.genre }}</p>
+            </div>
+        </div>
 
-                    <div class="description-box">
-                        {{ pelicula.description|default('Sin descripción.') }}
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4 g-4">
+            {% for peli in peliculas %}
+                <div class="col">
+                    <div class="movie-card d-flex flex-column">
+                        <div class="poster-container">
+                            <img src="{{ peli.imageUrl }}" alt="{{ peli.titulo }}">
+                            <div class="rating-badge">★ {{ peli.mediaReal }}</div>
+                        </div>
+                        <div class="card-body p-3 text-center">
+                            <h6 class="fw-bold text-truncate mb-1">{{ peli.titulo }}</h6>
+                            <small class="text-muted d-block mb-3">{{ peli.genre }}</small>
+                            <a href="{{ path('app_admin_pelicula_show', {id: peli.id}) }}" class="btn btn-sm btn-dark w-100 rounded-pill">Detalles y Votar</a>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+
+    {% else %}
+        {# --- VISTA DETALLE --- #}
+        <div class="card shadow border-0 p-4 mb-4" style="border-radius: 30px;">
+            <div class="row">
+                <div class="col-md-4 text-center">
+                    <img src="{{ pelicula.imageUrl }}" class="img-fluid rounded-4 shadow-lg mb-3" alt="{{ pelicula.titulo }}">
+                    <a href="{{ path('app_pelicula_catalogo') }}" class="btn btn-light w-100 rounded-pill mt-2 border">← Volver</a>
+                </div>
+
+                <div class="col-md-8">
+                    <span class="badge bg-primary mb-2">{{ pelicula.genre }}</span>
+                    <h1 class="fw-bold mb-0">{{ pelicula.titulo }}</h1>
+                    <p class="fs-5 text-muted mb-4">{{ pelicula.year }}</p>
+
+                    <div class="d-flex align-items-center gap-3 mb-4 p-3 bg-yellow-soft rounded-4" style="background: #fffbeb; border: 1px solid #fef3c7;">
+                        <span style="font-size: 2rem;">⭐</span>
+                        <div>
+                            <h3 class="mb-0 fw-bold" style="color: #b45309;">{{ pelicula.mediaReal }} / 5</h3>
+                            <small class="text-muted">Basado en {{ pelicula.valoraciones|length }} opiniones</small>
+                        </div>
                     </div>
 
-                    <div class="vote-section">
-                        <h3>Deja tu valoración personal ✍️</h3>
+                    <p class="text-secondary mb-4">{{ pelicula.description }}</p>
+
+                    <hr class="my-4">
+
+                    {# --- FORMULARIO DE VALORACIÓN --- #}
+                    <div class="form-valorar shadow-sm mb-5">
+                        <h5 class="fw-bold mb-3">TU VALORACIÓN</h5>
                         <form action="{{ path('app_pelicula_valorar', {'id': pelicula.id}) }}" method="POST">
-                            <div class="star-rating">
-                                <input type="radio" id="star5" name="puntuacion" value="5" required><label for="star5">★</label>
-                                <input type="radio" id="star4" name="puntuacion" value="4"><label for="star4">★</label>
-                                <input type="radio" id="star3" name="puntuacion" value="3"><label for="star3">★</label>
-                                <input type="radio" id="star2" name="puntuacion" value="2"><label for="star2">★</label>
-                                <input type="radio" id="star1" name="puntuacion" value="1"><label for="star1">★</label>
+                            <div class="row">
+                                <div class="col-md-4 mb-3">
+                                    <select name="puntuacion" class="form-select rounded-pill" required>
+                                        <option value="5">Excelente (5)</option>
+                                        <option value="4">Muy buena (4)</option>
+                                        <option value="3" selected>Normal (3)</option>
+                                        <option value="2">Mala (2)</option>
+                                        <option value="1">Horrible (1)</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-8 mb-3">
+                                    <input type="text" name="comentario" class="form-control rounded-pill" placeholder="¿Qué te ha parecido?" required>
+                                </div>
                             </div>
-                            <textarea name="comentario" style="width:100%; height:80px; margin:10px 0; border-radius:10px; padding:10px;" placeholder="¿Qué te ha parecido?"></textarea>
-                            <button type="submit" class="btn-send-vote">Guardar mi valoración</button>
+                            <button type="submit" class="btn btn-primary fw-bold px-5 rounded-pill">ENVIAR NOTA</button>
                         </form>
                     </div>
 
-                    <div class="comments-list">
-                        <h4>Opiniones:</h4>
-                        {% for val in pelicula.valoraciones %}
-                            <div class="comment-item">
-                                <strong>{{ val.usuario.email|split('@')[0] }}</strong>
-                                <span style="color: #f1c40f;">{% for i in 1..val.puntuacion %}★{% endfor %}</span>
-                                <p style="margin:5px 0 0 0;">{{ val.comentario }}</p>
+                    <h5 class="fw-bold mb-4">OPINIONES RECIENTES</h5>
+                    {% for valoracion in pelicula.valoraciones %}
+                        <div class="valoracion-item shadow-sm">
+                            <div class="d-flex justify-content-between align-items-start">
+                                <div>
+                                    <div class="fw-bold" style="color: #1e293b;">{{ valoracion.usuario.email|split('@')[0] }}</div>
+                                    <p class="mb-0 mt-1">"{{ valoracion.comentario }}"</p>
+                                </div>
+                                <span class="badge bg-warning text-dark">★ {{ valoracion.puntuacion }}</span>
                             </div>
-                        {% endfor %}
-                    </div>
+                        </div>
+                    {% else %}
+                        <div class="text-center py-4 bg-light rounded-4">
+                            <p class="text-muted mb-0">Sé el primero en opinar sobre esta película.</p>
+                        </div>
+                    {% endfor %}
                 </div>
             </div>
-            <a href="{{ path('app_pelicula_catalogo') }}" style="display:block; margin-top:20px;">⬅️ Volver al Catálogo</a>
-
-        {% else %}
-            {# --- ESTO ES EL CATÁLOGO (GRID DE FOTOS) --- #}
-            <h1 style="text-align: center; color: #1e293b; font-size: 3rem; font-weight: 800;">🍿 NUESTRO CATÁLOGO</h1>
-            <div class="movie-grid">
-                {% for p in peliculas %}
-                    <a href="{{ path('app_admin_pelicula_show', {id: p.id}) }}" class="movie-card">
-                        <img src="{{ p.imageUrl }}" alt="{{ p.titulo }}">
-                        <h4>{{ p.titulo }}</h4>
-                        <small style="color: #64748b;">{{ p.genre }} ({{ p.year }})</small>
-                    </a>
-                {% endfor %}
-            </div>
-            <div style="text-align: center; margin-top: 30px;">
-                <a href="{{ path('app_home') }}" style="color: #475569; font-weight: bold;">🏠 Inicio</a>
-            </div>
-        {% endif %}
-    </div>
+        </div>
+    {% endif %}
+</div>
 {% endblock %}

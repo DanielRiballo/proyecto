@@ -4,27 +4,36 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="2b87fba6-276f-4553-a501-caa078e0d89f" name="Changes" comment="pagina de valoraciones de peliculas, pagina de admin">
-      <change beforePath="$PROJECT_DIR$/.env" beforeDir="false" afterPath="$PROJECT_DIR$/.env" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/c2d5ff61-d009-42aa-a91f-87511858ec42.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/c2d5ff61-d009-42aa-a91f-87511858ec42.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/c2d5ff61-d009-42aa-a91f-87511858ec42/storage_v2/_src_/database/proyectovaloracion.J4Hp6Q/schema/public.abK9xQ.meta" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/c2d5ff61-d009-42aa-a91f-87511858ec42/storage_v2/_src_/database/proyectovaloracion.J4Hp6Q/schema/public.abK9xQ.meta" afterDir="false" />
+    <list default="true" id="2b87fba6-276f-4553-a501-caa078e0d89f" name="Changes" comment="Los usuarios pueden hacer 1 comentario por pelicula, en el ranking se puede filtrar por el tipo de genero de la pelicula y se ordena del mejor al peor según las valoraciones de la gente , panel de admin eh creado un botón para importsr dstod de la api para que cuando pongas mas peliculas se meta en la base de datos automaticamente .">
+      <change afterPath="$PROJECT_DIR$/templates/admin/auditoria.html.twig" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/admin_pelicula/auditoria.html.twig" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/admin_pelicula/estadisticas_globales.html.twig" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/admin_pelicula/import.html.twig" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/admin_pelicula/index_catalogo.html.twig" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/admin_pelicula/listado_rankings.html.twig" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/admin_pelicula/misuperranking.html.twig" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/admin_pelicula/new_ranking.html.twig" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/admin_pelicula/stats_ranking.html.twig" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/config/packages/security.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/config/packages/security.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/reference.php" beforeDir="false" afterPath="$PROJECT_DIR$/config/reference.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/AdminDashboardController.php" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Controller/AdminPeliculaController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/AdminPeliculaController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/PeliculaController.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/HomeController.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/LoginController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/LoginController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Controller/RegistrationController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/RegistrationController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Entity/Pelicula.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Pelicula.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Entity/Ranking.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Ranking.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/Usuario.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Usuario.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Entity/Valoracion.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Valoracion.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Form/PeliculaType.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Form/PeliculaType.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Form/RankingType.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Form/RankingType.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Form/RegistrationFormType.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Form/RegistrationFormType.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/admin/dashboard.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/admin/dashboard.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/admin_pelicula/ranking.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/admin_pelicula/ranking.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/admin_pelicula/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/admin_pelicula/index.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/admin_pelicula/ranking.html.twig" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/admin_pelicula/show.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/admin_pelicula/show.html.twig" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/base.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/base.html.twig" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/home/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/home/index.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/pelicula/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/pelicula/index.html.twig" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -267,6 +276,17 @@
       <workItem from="1770798505238" duration="4462000" />
       <workItem from="1770825326976" duration="3116000" />
       <workItem from="1771171505738" duration="13592000" />
+      <workItem from="1771240552300" duration="492000" />
+      <workItem from="1771253441188" duration="624000" />
+      <workItem from="1771264167487" duration="5252000" />
+      <workItem from="1771322531619" duration="4006000" />
+      <workItem from="1771336528171" duration="8569000" />
+      <workItem from="1771429734960" duration="1574000" />
+      <workItem from="1771443513995" duration="1623000" />
+      <workItem from="1771494061322" duration="5444000" />
+      <workItem from="1771509083117" duration="1171000" />
+      <workItem from="1771511329676" duration="2570000" />
+      <workItem from="1771576952663" duration="5224000" />
     </task>
     <task id="LOCAL-00001" summary="migracion de la base de datos">
       <option name="closed" value="true" />
@@ -300,7 +320,15 @@
       <option name="project" value="LOCAL" />
       <updated>1770127920338</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="Los usuarios pueden hacer 1 comentario por pelicula, en el ranking se puede filtrar por el tipo de genero de la pelicula y se ordena del mejor al peor según las valoraciones de la gente , panel de admin eh creado un botón para importsr dstod de la api para que cuando pongas mas peliculas se meta en la base de datos automaticamente .">
+      <option name="closed" value="true" />
+      <created>1771240909531</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1771240909531</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -311,7 +339,8 @@
     <MESSAGE value="inicio de secion, registro, seguridad, pagina admin" />
     <MESSAGE value="actualizacion de inicio de secion, registro, seguridad, pagina admin" />
     <MESSAGE value="pagina de valoraciones de peliculas, pagina de admin" />
-    <option name="LAST_COMMIT_MESSAGE" value="pagina de valoraciones de peliculas, pagina de admin" />
+    <MESSAGE value="Los usuarios pueden hacer 1 comentario por pelicula, en el ranking se puede filtrar por el tipo de genero de la pelicula y se ordena del mejor al peor según las valoraciones de la gente , panel de admin eh creado un botón para importsr dstod de la api para que cuando pongas mas peliculas se meta en la base de datos automaticamente ." />
+    <option name="LAST_COMMIT_MESSAGE" value="Los usuarios pueden hacer 1 comentario por pelicula, en el ranking se puede filtrar por el tipo de genero de la pelicula y se ordena del mejor al peor según las valoraciones de la gente , panel de admin eh creado un botón para importsr dstod de la api para que cuando pongas mas peliculas se meta en la base de datos automaticamente ." />
   </component>
   <component name="github-copilot-workspace">
     <instructionFileLocations>
